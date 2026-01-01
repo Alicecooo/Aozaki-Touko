@@ -74,5 +74,5 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
         with:
-            submodules: false  # 关闭子模块拉取（关键）
+            submodules: recursive  # 必须是 recursive，拉取子模块
             fetch-depth: 0

@@ -1,0 +1,105 @@
+baseURL: https://example.org/
+languageCode: en-us
+title: Aozaki Touko
+theme: ["PaperMod"]
+
+
+
+# SEO & 构建控制
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+
+# 输出压缩（提升性能）
+minify:
+  disableXML: true
+  minifyOutput: true
+
+# 核心参数（精简版）
+params:
+  env: production
+  title: ExampleSite
+  description: "ExampleSite description"
+  keywords: [Blog, Portfolio, PaperMod]
+  author: Me
+  images: ["https://examplesite.com/og-image.jpg"] # 替换为实际分享图地址
+  DateFormat: "2006年01月02日" # 适配中文日期格式
+  defaultTheme: auto
+  disableThemeToggle: false
+
+  # 界面展示
+  ShowReadingTime: true
+  ShowShareButtons: false
+  ShowPostNavLinks: true
+  ShowBreadCrumbs: true
+  ShowCodeCopyButtons: true # 开启代码复制（实用优化）
+  ShowWordCount: true
+  ShowRssButtonInSectionTermList: false
+  UseHugoToc: false
+
+
+  # 图标配置（简化，保留核心）
+  assets:
+    favicon: "/favicon.ico" # 建议放在static目录下
+    apple_touch_icon: "/apple-touch-icon.png"
+
+  # 首页信息
+  homeInfoParams:
+    Title: "Welcome to my blog!"
+    Content: 早安、晚安、谢谢、再见！
+    enableList: true
+
+  # 社交图标（保留核心）
+  socialIcons:
+    - name: github
+      url: "https://github.com/Alicecooo"
+
+  # 分析验证（保留核心）
+  analytics:
+    google:
+      SiteVerificationTag: "XYZabc"
+
+  # 封面控制
+  cover:
+    hidden: true
+    hiddenInList: true
+    hiddenInSingle: true
+
+
+  # 搜索配置（保留核心）
+  fuseOpts:
+    isCaseSensitive: false
+    shouldSort: true
+    location: 0
+    distance: 1000
+    threshold: 0.4
+    minMatchCharLength: 0
+    limit: 10
+    keys: ["title", "permalink", "summary", "content"]
+
+# 导航菜单（保留核心）
+menu:
+  main:
+    - identifier: home
+      name: Home
+      url: /
+      weight: 10  
+    - identifier: archives
+      name: Archives
+      url: /archives/
+      weight: 20
+    - identifier: tags
+      name: Tag
+      url: /tags/
+      weight: 30
+    - identifier: About
+      name: About
+      url: /About/ 
+      weight: 40
+
+# 代码高亮（保留核心）
+pygmentsUseClasses: true
+markup:
+  highlight:
+    noClasses: false

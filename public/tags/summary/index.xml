@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Summary on Aozaki Touko</title>
+    <link>http://localhost:1313/tags/summary/</link>
+    <description>Recent content in Summary on Aozaki Touko</description>
+    <image>
+      <title>Aozaki Touko</title>
+      <url>https://examplesite.com/og-image.jpg</url>
+      <link>https://examplesite.com/og-image.jpg</link>
+    </image>
+    <generator>Hugo -- 0.153.5</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 01 Jan 2026 19:06:59 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/summary/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Summary-First</title>
+      <link>http://localhost:1313/posts/summary-first/</link>
+      <pubDate>Thu, 01 Jan 2026 19:06:59 +0800</pubDate>
+      <guid>http://localhost:1313/posts/summary-first/</guid>
+      <description>&lt;h3 id=&#34;回顾&#34;&gt;回顾&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;七八月：在家摆了两个月，考驾照，考到科二，加了一个游戏文案小组群。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;九月：到学校，高考砸了，被调剂。适应学校同时，开始对未来打算，也多亏了之前上网冲浪的经历，接触了些网络学习渠道，开始CS50。做的相当痛苦，写不出了problem。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;十月：反正就是磨，把cs50磨完了，感觉自己还是太笨了，磕磕绊绊，什么都不会写。其间，还到牛客上做题·写了些简单题~~（我，当时，太蠢了）~~，力扣上写了些简单题，感觉什么都没学会。尝试了许多方向，在写了几期游戏文案活动后，很挫败。（理想与现实的偏差，写不来东西，很痛苦，感觉自己不适合写这东西，很难是现在还有什么创作热情）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;十一月：又跑去学了些其他东西，摸了些数字模拟电路的皮毛。开始看51和stm32单片机教程，51速通，stm32学到pwm，又去学了EDA，画电路板，摸了些皮毛，会简单画画电路板，上嘉立创白嫖了几份。开始cs106x&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;十二月：折磨，cs106x推进相当艰难，还是不会写，痛苦，我一直怀疑自己是否适合学着东西。折腾来折腾去，没一个主线，反正就是在试。力扣，代码随想录上又开始做了些题，还是太笨了，做不出来。期末要到了，准备些考试。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title>Summary-Second</title>
+      <link>http://localhost:1313/posts/summary-second/</link>
+      <pubDate>Thu, 01 Jan 2026 19:06:59 +0800</pubDate>
+      <guid>http://localhost:1313/posts/summary-second/</guid>
+      <description>&lt;h3 id=&#34;回顾&#34;&gt;回顾&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;还是拖了太长时间了，本来应该在暑假开始写完的。结果一直拖到了现在，真是罪过了。很高兴，我在下学期成功的完成了转专业，但也因此欠了好些课程（学校的程序流程真是漫长），日子一天也就那样过去，补些高数大物课，做些没什么用途的实验，应付应付作业，以及开我的 CSAPP，拖拖拉拉的，就像这个暑假一样。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;时间，永不复焉。我记得刚开学的时。弄了些记录每日花费时间的流程，料想反思总结一类的，结果也是渐渐的丢走了，好像都是我自己的问题。开学的时候大抵是二三月，那时候就是在准备转专业，学一些后端的东西，或者用看更合适，毕竟，都没怎么记在脑子中。这些流程花了一个月的时间，在四月完成，到七月的放假，除去应付课业的时间。我好像并没有完成些什么，人也是变得越来拖拉，跟舍友打游戏，摆烂。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;之前的时候弄了些 STM 32 玩了玩，又一个认清自己的过程，一开始了解的时候感觉特别有意思，但渐渐的，看着那些电路，作板，焊了些东西，发现自己不是很热爱。暑假的时候尝试了图灵完备，也是玩不下去，机组对我来说真是特别特别折磨的一门课，读不下去，十分痛苦。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;七月末的时候把驾照考了出来，日子的一天又一天过去，“为什么不好好利用呢？“，念头总是浮现在脑海中，但这好像是我自己选的路。消磨，消磨，消磨，总是如此，特别容易在完成一个目标之后，在，某个时间段延展。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;我记得在高中的时候也是，放假的时候总是消磨，不是浪费，而是消磨，不想去写那些作业，也不想去看那些东西，尽管它们很有用。无数次给自己定了目标，想着了解一些兴趣爱好，多读一些有趣的书。但却往往时间与作业赛跑，书也只有在学校才看的下去。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;起床到九十点，吃饭，消磨时间，玩手机，玩游戏，又或者干些琐事，其实清楚但没有改变，一次又一次，直到夜晚，然后又是一天。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;家是在乡下，有时会跟奶奶上田，帮他运些东西。天总是很蓝，一层又一层的云缠上面，我骑着小电驴，这样走着。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;我不太喜欢在家里面呆着，父母总是催促我出去转转走走，不知道该怎么诉说，这不是第一个暑假了，往年很多很多次，尚也如此。我想着挣钱，想着好好上公开课。争取明年找到实习，反却总是拖延。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&amp;ldquo;是我不知道如何做吗？&amp;quot;，“是我不能这样做吗？”。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;我想我是在逃避。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+  </channel>
+</rss>

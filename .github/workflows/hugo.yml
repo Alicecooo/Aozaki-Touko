@@ -72,4 +72,7 @@ jobs:
     steps:
       - name: 部署到GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4  # 新版部署插件，无需手动download-artifact
+        uses: actions/deploy-pages@v4
+        with:
+            submodules: false  # 关闭子模块拉取（关键）
+            fetch-depth: 0

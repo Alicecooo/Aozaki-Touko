@@ -75,8 +75,7 @@
     color: var(--secondary);
 }
 
-
-/* Home Info Layout Styles */
+/* 极简版 1:1 圆形头像样式 - 文字靠左对齐 */
 .home-info-main-container {
     display: flex;
     flex-direction: column;
@@ -84,20 +83,26 @@
     max-width: 100%;
 }
 
+/* 核心调整：头像左、文字右，整体靠左对齐 */
 .home-info-content-wrapper {
     display: flex;
-    align-items: center;
+    align-items: flex-start; /* 取消垂直居中，改为顶部对齐 */
     gap: 32px;
+    justify-content: flex-start; /* 整体容器靠左 */
 }
 
+/* 圆形头像容器 - 核心1:1尺寸 */
 .home-info-avatar-container {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
     position: relative;
+    width: 120px;   /* 头像基础宽度 */
+    height: 120px;  /* 1:1 正方形容器 */
 }
 
+/* 分隔线 - 保留原有样式 */
 .home-info-avatar-container::after {
     content: '';
     position: absolute;
@@ -109,54 +114,60 @@
     background-color: #e5e5e5;
 }
 
+/* 文字内容靠左对齐 */
 .home-info-text-content {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin-top: 8px;
+    text-align: left; /* 强制文字靠左 */
 }
 
-/* 关键修改：添加宽高、object-fit */
+/* 核心圆形头像样式 */
 .home-info-avatar-img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50% !important;
+    width: 100%;
+    height: 100%;
+    border-radius: 50% !important;  /* 强制圆形 */
     border: 2px solid #f0f0f0;
+    object-fit: cover;             /* 保证图片不变形 */
     transition: transform 0.2s ease;
-    object-fit: cover; /* 保持图片比例 */
 }
 
 .home-info-avatar-img:hover {
-    transform: scale(1.02);
+    transform: scale(1.02);         /* 轻微悬浮放大 */
 }
 
-/* 响应式设计 */
+/* 移动端基础适配 */
 @media (max-width: 768px) {
     .home-info-content-wrapper {
         flex-direction: column;
         gap: 20px;
-        text-align: center;
+        text-align: left; /* 移动端也保持文字靠左 */
+        align-items: flex-start; /* 移动端头像也靠左 */
     }
     
     .home-info-text-content {
         margin-top: 0;
+        text-align: left; /* 强制移动端文字不居中 */
     }
     
+    /* 移动端隐藏分隔线 */
     .home-info-avatar-container::after {
         display: none;
     }
     
+    /* 移动端头像略缩小 */
+    .home-info-avatar-container {
+        width: 100px;
+        height: 100px;
+    }
+    
+    /* 社交图标靠左（取消居中） */
     .home-info .entry-footer {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start; /* 图标靠左 */
         align-items: center;
-    }
-
-    /* 移动端调整头像大小 */
-    .home-info-avatar-img {
-        width: 60px;
-        height: 60px;
     }
 }
 

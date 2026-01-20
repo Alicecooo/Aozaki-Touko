@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Posts on Aozaki Touko</title>
-    <link>http://localhost:1313/posts/</link>
+    <link>http://localhost:1313/Aozaki-Touko/posts/</link>
     <description>Recent content in Posts on Aozaki Touko</description>
     <generator>Hugo -- 0.154.5</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 20 Jan 2026 15:15:32 +0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:1313/Aozaki-Touko/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>算法记录(一)</title>
-      <link>http://localhost:1313/posts/%E7%AE%97%E6%B3%95%E8%AE%B0%E5%BD%95%E4%B8%80/</link>
+      <link>http://localhost:1313/Aozaki-Touko/posts/%E7%AE%97%E6%B3%95%E8%AE%B0%E5%BD%95%E4%B8%80/</link>
       <pubDate>Tue, 20 Jan 2026 15:15:32 +0800</pubDate>
-      <guid>http://localhost:1313/posts/%E7%AE%97%E6%B3%95%E8%AE%B0%E5%BD%95%E4%B8%80/</guid>
+      <guid>http://localhost:1313/Aozaki-Touko/posts/%E7%AE%97%E6%B3%95%E8%AE%B0%E5%BD%95%E4%B8%80/</guid>
       <description>&lt;h1 id=&#34;前置&#34;&gt;前置&lt;/h1&gt;
 &lt;h2 id=&#34;定长&#34;&gt;定长&lt;/h2&gt;
 &lt;ul&gt;
@@ -53,16 +53,16 @@
     </item>
     <item>
       <title>MIT 6.s081 2025 Fall 实验记录</title>
-      <link>http://localhost:1313/posts/miit-6.s081/</link>
+      <link>http://localhost:1313/Aozaki-Touko/posts/miit-6.s081/</link>
       <pubDate>Sun, 26 Oct 2025 23:47:00 +0800</pubDate>
-      <guid>http://localhost:1313/posts/miit-6.s081/</guid>
+      <guid>http://localhost:1313/Aozaki-Touko/posts/miit-6.s081/</guid>
       <description>MIT 6.s081 2025秋季操作系统实验记录</description>
     </item>
     <item>
       <title>Summary-Second</title>
-      <link>http://localhost:1313/posts/summary-second/</link>
+      <link>http://localhost:1313/Aozaki-Touko/posts/summary-second/</link>
       <pubDate>Sat, 23 Aug 2025 19:10:44 +0800</pubDate>
-      <guid>http://localhost:1313/posts/summary-second/</guid>
+      <guid>http://localhost:1313/Aozaki-Touko/posts/summary-second/</guid>
       <description>&lt;h3 id=&#34;回顾&#34;&gt;回顾&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;
@@ -99,23 +99,23 @@
     </item>
     <item>
       <title>CSAPP</title>
-      <link>http://localhost:1313/posts/csapp/</link>
+      <link>http://localhost:1313/Aozaki-Touko/posts/csapp/</link>
       <pubDate>Sun, 10 Aug 2025 18:37:42 +0800</pubDate>
-      <guid>http://localhost:1313/posts/csapp/</guid>
+      <guid>http://localhost:1313/Aozaki-Touko/posts/csapp/</guid>
       <description>CSAPP 相关学习笔记</description>
     </item>
     <item>
       <title>CS106B</title>
-      <link>http://localhost:1313/posts/cs106b/</link>
+      <link>http://localhost:1313/Aozaki-Touko/posts/cs106b/</link>
       <pubDate>Tue, 04 Feb 2025 19:10:59 +0800</pubDate>
-      <guid>http://localhost:1313/posts/cs106b/</guid>
+      <guid>http://localhost:1313/Aozaki-Touko/posts/cs106b/</guid>
       <description>CS106B 课程学习记录</description>
     </item>
     <item>
       <title>Summary-First</title>
-      <link>http://localhost:1313/posts/summary-first/</link>
+      <link>http://localhost:1313/Aozaki-Touko/posts/summary-first/</link>
       <pubDate>Tue, 04 Feb 2025 19:10:44 +0800</pubDate>
-      <guid>http://localhost:1313/posts/summary-first/</guid>
+      <guid>http://localhost:1313/Aozaki-Touko/posts/summary-first/</guid>
       <description>&lt;h3 id=&#34;回顾&#34;&gt;回顾&lt;/h3&gt;
 &lt;ul&gt;
 &lt;li&gt;

@@ -1,4 +1,4 @@
-baseURL: https://example.org/
+baseURL: https://alicecooo.github.io/Aozaki-Touko/
 languageCode: en-us
 title: Aozaki Touko
 theme: ["PaperMod"]
@@ -45,8 +45,10 @@ params:
   homeInfoParams:
     Title: "欢迎回来"
     Content: 早安、晚安、谢谢、再见！
-    ImageUrl: /images/avatar.jpeg
+    ImageUrl: /images/avatar.jpeg 
     enableList: true
+
+
 
   # 社交图标（保留核心）
   socialIcons:

@@ -1,10 +1,9 @@
 ---
-date: '2026-01-01T19:06:59+08:00'
+date: '2025-02-04T19:10:44+08:00' 
 draft: false
 title: 'Summary-First'
-tags: ["Summary"] 
+tags: ["Summary"]
 ---
-
 ### 回顾
 - 七八月：在家摆了两个月，考驾照，考到科二，加了一个游戏文案小组群。
 

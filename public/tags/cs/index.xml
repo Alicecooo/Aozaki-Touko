@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>CS on Aozaki Touko</title>
+    <link>http://localhost:1313/tags/cs/</link>
+    <description>Recent content in CS on Aozaki Touko</description>
+    <generator>Hugo -- 0.154.5</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 20 Jan 2026 15:15:32 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/tags/cs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>算法记录(一)</title>
+      <link>http://localhost:1313/posts/%E7%AE%97%E6%B3%95%E8%AE%B0%E5%BD%95%E4%B8%80/</link>
+      <pubDate>Tue, 20 Jan 2026 15:15:32 +0800</pubDate>
+      <guid>http://localhost:1313/posts/%E7%AE%97%E6%B3%95%E8%AE%B0%E5%BD%95%E4%B8%80/</guid>
+      <description>&lt;h1 id=&#34;前置&#34;&gt;前置&lt;/h1&gt;
+&lt;h2 id=&#34;定长&#34;&gt;定长&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;定长处理比较容易，不用关心窗口的大小，只用针对满足特定数组的条件进行处理判断。&lt;/li&gt;
+&lt;li&gt;主要的思路如下：&lt;/li&gt;
+&lt;li&gt;窗口右端点在 i 时，由于窗口长度为 k，所以窗口左端点为 i−k+1。
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;三步：入-更新-出。&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;入&lt;/strong&gt;：下标为 i 的元素进入窗口，更新相关统计量。如果窗口左端点 i−k+1&amp;lt;0，则尚未形成第一个窗口，重复第一步。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;更新&lt;/strong&gt;：更新答案。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;出&lt;/strong&gt;：下标为 i−k+1 的元素离开窗口，更新相关统计量，为下一个循环做准备。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;不定长&#34;&gt;不定长&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;不定长滑动窗口主要分为三类：求最长子数组，求最短子数组，求子数组个数。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;求最长子数组和最短子数组，还是入——更新——出，三步走。不过会略有不同。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;更新：下标为 i 的元素进入。如果满足条件，加入，重复，继续扩大，直到遇到不合适情况。&lt;/li&gt;
+&lt;li&gt;出：下标为 left 的元素离开窗口，left++ ，记录此时带窗口大小 i-left+1，为下一个循环做准备。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;求子数组个数&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;越短越合法
+一般要写 ans += right - left + 1。内层循环结束后，[left, right] 这个子数组是满足题目要求的。由于子数组越短，越能满足题目要求，所以除了 [left, right]，还有 [left+1, right],[left+2, right],…,[right, right] 都是满足要求的。也就是说，当右端点固定在 right 时，左端点在 left, left+1, left+2,…, right 的所有子数组都是满足要求的，这一共有 right−left+1 个。&lt;/li&gt;
+&lt;li&gt;越长越合法
+一般要写 ans += left。内层循环结束后，[left, right] 这个子数组是不满足题目要求的，但在退出循环之前的最后一轮循环，[left−1, right] 是满足题目要求的。由于子数组越长，越能满足题目要求，所以除了 [left−1, right]，还有 [left−2, right],[left−3, right],…,[0, right] 都是满足要求的。也就是说，当右端点固定在 right 时，左端点在 0,1,2,…, left−1 的所有子数组都是满足要求的，这一共有 left 个。我们关注的是 left−1 的合法性，而不是 left。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;恰好型滑动&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>CS106B</title>
+      <link>http://localhost:1313/posts/cs106b/</link>
+      <pubDate>Tue, 04 Feb 2025 19:10:59 +0800</pubDate>
+      <guid>http://localhost:1313/posts/cs106b/</guid>
+      <description>CS106B 课程学习记录</description>
+    </item>
+  </channel>
+</rss>

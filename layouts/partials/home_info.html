@@ -1,0 +1,45 @@
+{{- with site.Params.homeInfoParams }}
+<article class="first-entry home-info">
+    <div class="home-info-container home-info-main-container">
+        <div class="home-info-content-wrapper">
+            <div class="home-info-avatar home-info-avatar-container">
+                {{- if .ImageUrl -}}
+                    {{- /* 初始化图片URL变量 */ -}}
+                    {{- $imgSrc := .ImageUrl | absURL -}}
+                    {{- /* 处理资源路径：移除开头的/，适配assets目录；同时兼容static目录 */ -}}
+                    {{- $imgPath := strings.TrimPrefix "/" .ImageUrl -}}
+                    {{- $img := resources.Get $imgPath -}}
+                    
+                    {{- /* 如果从assets找到图片，调整尺寸并更新URL */ -}}
+                    {{- if $img }}
+                        {{- $size := printf "%dx%d" (.ImageWidth | default 100) (.ImageHeight | default 100) -}}
+                        {{- /* 调整图片尺寸，保持比例，避免变形 */ -}}
+                        {{- $img = $img.Resize (printf "%s q85 Lanczos" $size) -}}
+                        {{- $imgSrc = $img.Permalink -}}
+                    {{- end }}
+                    
+                    {{- /* 渲染图片标签，补充缺失的alt优化和样式类 */ -}}
+                    <img id="home-info-avatar" 
+                         draggable="false" 
+                         src="{{ $imgSrc }}" 
+                         alt="{{ .Title | default "个人头像" }}" 
+                         height="{{ .ImageHeight | default 100 }}" 
+                         width="{{ .ImageWidth | default 100 }}" 
+                         class="home-info-avatar-img" />
+                {{- end }}
+            </div>
+            <div class="entry-main home-info-text-content">
+                <header class="entry-header">
+                    <h1>{{ .Title | markdownify }}</h1>
+                </header>
+                <div class="entry-content">
+                    {{ .Content | markdownify }}
+                </div>
+            </div>
+        </div>
+        <footer class="entry-footer">
+            {{ partial "social_icons.html" (dict "align" site.Params.homeInfoParams.AlignSocialIconsTo) }}
+        </footer>
+    </div>
+</article>
+{{- end -}}

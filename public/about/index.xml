@@ -4,12 +4,7 @@
     <title>About me on Aozaki Touko</title>
     <link>http://localhost:1313/about/</link>
     <description>Recent content in About me on Aozaki Touko</description>
-    <image>
-      <title>Aozaki Touko</title>
-      <url>https://examplesite.com/og-image.jpg</url>
-      <link>https://examplesite.com/og-image.jpg</link>
-    </image>
-    <generator>Hugo -- 0.153.5</generator>
+    <generator>Hugo -- 0.154.5</generator>
     <language>en-us</language>
     <atom:link href="http://localhost:1313/about/index.xml" rel="self" type="application/rss+xml" />
   </channel>

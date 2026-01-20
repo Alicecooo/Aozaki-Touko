@@ -1,0 +1,162 @@
+:root {
+    --nav-width: 1380px;
+    --article-width: 650px;
+    --toc-width: 300px;
+}
+
+.toc {
+    margin: 0 2px 40px 2px;
+    border: 1px solid var(--border);
+    background: var(--entry);
+    border-radius: var(--radius);
+    padding: 0.4em;
+}
+
+.toc-container.wide {
+    position: absolute;
+    height: 100%;
+    border-right: 1px solid var(--border);
+    left: calc((var(--toc-width) + var(--gap)) * -1);
+    top: calc(var(--gap) * 2);
+    width: var(--toc-width);
+}
+
+.wide .toc {
+    position: sticky;
+    top: var(--gap);
+    border: unset;
+    background: unset;
+    border-radius: unset;
+    width: 100%;
+    margin: 0 2px 40px 2px;
+}
+
+.toc details summary {
+    cursor: zoom-in;
+    margin-inline-start: 20px;
+    padding: 12px 0;
+}
+
+.toc details[open] summary {
+    font-weight: 500;
+}
+
+.toc-container.wide .toc .inner {
+    margin: 0;
+}
+
+.active {
+    font-size: 110%;
+    font-weight: 600;
+}
+
+.toc ul {
+    list-style-type: circle;
+}
+
+.toc .inner {
+    margin: 0 0 0 20px;
+    padding: 0px 15px 15px 20px;
+    font-size: 16px;
+}
+
+.toc li ul {
+    margin-inline-start: calc(var(--gap) * 0.5);
+    list-style-type: none;
+}
+
+.toc li {
+    list-style: none;
+    font-size: 0.95rem;
+    padding-bottom: 5px;
+}
+
+.toc li a:hover {
+    color: var(--secondary);
+}
+
+
+/* Home Info Layout Styles */
+.home-info-main-container {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 100%;
+}
+
+.home-info-content-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.home-info-avatar-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: relative;
+}
+
+.home-info-avatar-container::after {
+    content: '';
+    position: absolute;
+    right: -16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+    height: 60px;
+    background-color: #e5e5e5;
+}
+
+.home-info-text-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+/* 关键修改：添加宽高、object-fit */
+.home-info-avatar-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50% !important;
+    border: 2px solid #f0f0f0;
+    transition: transform 0.2s ease;
+    object-fit: cover; /* 保持图片比例 */
+}
+
+.home-info-avatar-img:hover {
+    transform: scale(1.02);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .home-info-content-wrapper {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+    }
+    
+    .home-info-text-content {
+        margin-top: 0;
+    }
+    
+    .home-info-avatar-container::after {
+        display: none;
+    }
+    
+    .home-info .entry-footer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* 移动端调整头像大小 */
+    .home-info-avatar-img {
+        width: 60px;
+        height: 60px;
+    }
+}
+

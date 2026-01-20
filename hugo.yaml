@@ -19,14 +19,14 @@ minify:
 # 核心参数（精简版）
 params:
   env: production
-  title: ExampleSite
-  description: "ExampleSite description"
+  title: Aozaki Touko
+  description: "欢迎回来"
   keywords: [Blog, Portfolio, PaperMod]
-  author: Me
-  images: ["https://examplesite.com/og-image.jpg"] # 替换为实际分享图地址
-  DateFormat: "2006年01月02日" # 适配中文日期格式
+  author: Alicecooo
   defaultTheme: auto
-  disableThemeToggle: false
+  disableThemeToggle: true
+
+
 
   # 界面展示
   ShowReadingTime: true
@@ -39,15 +39,13 @@ params:
   UseHugoToc: false
 
 
-  # 图标配置（简化，保留核心）
-  assets:
-    favicon: "/favicon.ico" # 建议放在static目录下
-    apple_touch_icon: "/apple-touch-icon.png"
+
 
   # 首页信息
   homeInfoParams:
-    Title: "Welcome to my blog!"
+    Title: "欢迎回来"
     Content: 早安、晚安、谢谢、再见！
+    ImageUrl: /images/avatar.jpeg
     enableList: true
 
   # 社交图标（保留核心）
@@ -55,10 +53,6 @@ params:
     - name: github
       url: "https://github.com/Alicecooo"
 
-  # 分析验证（保留核心）
-  analytics:
-    google:
-      SiteVerificationTag: "XYZabc"
 
   # 封面控制
   cover:
@@ -66,19 +60,14 @@ params:
     hiddenInList: true
     hiddenInSingle: true
 
+  showtoc: true  # 显示目录
+  tocopen: false  # 自动展开目录
 
-  # 搜索配置（保留核心）
-  fuseOpts:
-    isCaseSensitive: false
-    shouldSort: true
-    location: 0
-    distance: 1000
-    threshold: 0.4
-    minMatchCharLength: 0
-    limit: 10
-    keys: ["title", "permalink", "summary", "content"]
 
-# 导航菜单（保留核心）
+home:
+  sortBy: "date"           
+  sortOrder: "desc" 
+
 menu:
   main:
     - identifier: home
@@ -103,3 +92,6 @@ pygmentsUseClasses: true
 markup:
   highlight:
     noClasses: false
+
+
+ 

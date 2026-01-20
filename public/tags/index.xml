@@ -4,20 +4,36 @@
     <title>Tags on Aozaki Touko</title>
     <link>http://localhost:1313/tags/</link>
     <description>Recent content in Tags on Aozaki Touko</description>
-    <image>
-      <title>Aozaki Touko</title>
-      <url>https://examplesite.com/og-image.jpg</url>
-      <link>https://examplesite.com/og-image.jpg</link>
-    </image>
-    <generator>Hugo -- 0.153.5</generator>
+    <generator>Hugo -- 0.154.5</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Jan 2026 19:06:59 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 20 Jan 2026 15:15:32 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CS</title>
+      <link>http://localhost:1313/tags/cs/</link>
+      <pubDate>Tue, 20 Jan 2026 15:15:32 +0800</pubDate>
+      <guid>http://localhost:1313/tags/cs/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>OS</title>
+      <link>http://localhost:1313/tags/os/</link>
+      <pubDate>Sun, 26 Oct 2025 23:47:00 +0800</pubDate>
+      <guid>http://localhost:1313/tags/os/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Summary</title>
       <link>http://localhost:1313/tags/summary/</link>
-      <pubDate>Thu, 01 Jan 2026 19:06:59 +0800</pubDate>
+      <pubDate>Sat, 23 Aug 2025 19:10:44 +0800</pubDate>
       <guid>http://localhost:1313/tags/summary/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>CSAPP</title>
+      <link>http://localhost:1313/tags/csapp/</link>
+      <pubDate>Sun, 10 Aug 2025 18:37:42 +0800</pubDate>
+      <guid>http://localhost:1313/tags/csapp/</guid>
       <description></description>
     </item>
   </channel>

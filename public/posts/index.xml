@@ -4,43 +4,64 @@
     <title>Posts on Aozaki Touko</title>
     <link>http://localhost:1313/posts/</link>
     <description>Recent content in Posts on Aozaki Touko</description>
-    <image>
-      <title>Aozaki Touko</title>
-      <url>https://examplesite.com/og-image.jpg</url>
-      <link>https://examplesite.com/og-image.jpg</link>
-    </image>
-    <generator>Hugo -- 0.153.5</generator>
+    <generator>Hugo -- 0.154.5</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 01 Jan 2026 19:06:59 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 20 Jan 2026 15:15:32 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Summary-First</title>
-      <link>http://localhost:1313/posts/summary-first/</link>
-      <pubDate>Thu, 01 Jan 2026 19:06:59 +0800</pubDate>
-      <guid>http://localhost:1313/posts/summary-first/</guid>
-      <description>&lt;h3 id=&#34;回顾&#34;&gt;回顾&lt;/h3&gt;
+      <title>算法记录(一)</title>
+      <link>http://localhost:1313/posts/%E7%AE%97%E6%B3%95%E8%AE%B0%E5%BD%95%E4%B8%80/</link>
+      <pubDate>Tue, 20 Jan 2026 15:15:32 +0800</pubDate>
+      <guid>http://localhost:1313/posts/%E7%AE%97%E6%B3%95%E8%AE%B0%E5%BD%95%E4%B8%80/</guid>
+      <description>&lt;h1 id=&#34;前置&#34;&gt;前置&lt;/h1&gt;
+&lt;h2 id=&#34;定长&#34;&gt;定长&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;定长处理比较容易，不用关心窗口的大小，只用针对满足特定数组的条件进行处理判断。&lt;/li&gt;
+&lt;li&gt;主要的思路如下：&lt;/li&gt;
+&lt;li&gt;窗口右端点在 i 时，由于窗口长度为 k，所以窗口左端点为 i−k+1。
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;三步：入-更新-出。&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;入&lt;/strong&gt;：下标为 i 的元素进入窗口，更新相关统计量。如果窗口左端点 i−k+1&amp;lt;0，则尚未形成第一个窗口，重复第一步。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;更新&lt;/strong&gt;：更新答案。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;出&lt;/strong&gt;：下标为 i−k+1 的元素离开窗口，更新相关统计量，为下一个循环做准备。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;不定长&#34;&gt;不定长&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;
-&lt;p&gt;七八月：在家摆了两个月，考驾照，考到科二，加了一个游戏文案小组群。&lt;/p&gt;
+&lt;p&gt;不定长滑动窗口主要分为三类：求最长子数组，求最短子数组，求子数组个数。&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;九月：到学校，高考砸了，被调剂。适应学校同时，开始对未来打算，也多亏了之前上网冲浪的经历，接触了些网络学习渠道，开始CS50。做的相当痛苦，写不出了problem。&lt;/p&gt;
+&lt;p&gt;求最长子数组和最短子数组，还是入——更新——出，三步走。不过会略有不同。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;更新：下标为 i 的元素进入。如果满足条件，加入，重复，继续扩大，直到遇到不合适情况。&lt;/li&gt;
+&lt;li&gt;出：下标为 left 的元素离开窗口，left++ ，记录此时带窗口大小 i-left+1，为下一个循环做准备。&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;十月：反正就是磨，把cs50磨完了，感觉自己还是太笨了，磕磕绊绊，什么都不会写。其间，还到牛客上做题·写了些简单题~~（我，当时，太蠢了）~~，力扣上写了些简单题，感觉什么都没学会。尝试了许多方向，在写了几期游戏文案活动后，很挫败。（理想与现实的偏差，写不来东西，很痛苦，感觉自己不适合写这东西，很难是现在还有什么创作热情）&lt;/p&gt;
+&lt;p&gt;求子数组个数&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;越短越合法
+一般要写 ans += right - left + 1。内层循环结束后，[left, right] 这个子数组是满足题目要求的。由于子数组越短，越能满足题目要求，所以除了 [left, right]，还有 [left+1, right],[left+2, right],…,[right, right] 都是满足要求的。也就是说，当右端点固定在 right 时，左端点在 left, left+1, left+2,…, right 的所有子数组都是满足要求的，这一共有 right−left+1 个。&lt;/li&gt;
+&lt;li&gt;越长越合法
+一般要写 ans += left。内层循环结束后，[left, right] 这个子数组是不满足题目要求的，但在退出循环之前的最后一轮循环，[left−1, right] 是满足题目要求的。由于子数组越长，越能满足题目要求，所以除了 [left−1, right]，还有 [left−2, right],[left−3, right],…,[0, right] 都是满足要求的。也就是说，当右端点固定在 right 时，左端点在 0,1,2,…, left−1 的所有子数组都是满足要求的，这一共有 left 个。我们关注的是 left−1 的合法性，而不是 left。&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;十一月：又跑去学了些其他东西，摸了些数字模拟电路的皮毛。开始看51和stm32单片机教程，51速通，stm32学到pwm，又去学了EDA，画电路板，摸了些皮毛，会简单画画电路板，上嘉立创白嫖了几份。开始cs106x&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;十二月：折磨，cs106x推进相当艰难，还是不会写，痛苦，我一直怀疑自己是否适合学着东西。折腾来折腾去，没一个主线，反正就是在试。力扣，代码随想录上又开始做了些题，还是太笨了，做不出来。期末要到了，准备些考试。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;</description>
+&lt;p&gt;恰好型滑动&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>MIT 6.s081 2025 Fall 实验记录</title>
+      <link>http://localhost:1313/posts/miit-6.s081/</link>
+      <pubDate>Sun, 26 Oct 2025 23:47:00 +0800</pubDate>
+      <guid>http://localhost:1313/posts/miit-6.s081/</guid>
+      <description>MIT 6.s081 2025秋季操作系统实验记录</description>
     </item>
     <item>
       <title>Summary-Second</title>
       <link>http://localhost:1313/posts/summary-second/</link>
-      <pubDate>Thu, 01 Jan 2026 19:06:59 +0800</pubDate>
+      <pubDate>Sat, 23 Aug 2025 19:10:44 +0800</pubDate>
       <guid>http://localhost:1313/posts/summary-second/</guid>
       <description>&lt;h3 id=&#34;回顾&#34;&gt;回顾&lt;/h3&gt;
 &lt;ul&gt;
@@ -73,6 +94,44 @@
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;我想我是在逃避。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title>CSAPP</title>
+      <link>http://localhost:1313/posts/csapp/</link>
+      <pubDate>Sun, 10 Aug 2025 18:37:42 +0800</pubDate>
+      <guid>http://localhost:1313/posts/csapp/</guid>
+      <description>CSAPP 相关学习笔记</description>
+    </item>
+    <item>
+      <title>CS106B</title>
+      <link>http://localhost:1313/posts/cs106b/</link>
+      <pubDate>Tue, 04 Feb 2025 19:10:59 +0800</pubDate>
+      <guid>http://localhost:1313/posts/cs106b/</guid>
+      <description>CS106B 课程学习记录</description>
+    </item>
+    <item>
+      <title>Summary-First</title>
+      <link>http://localhost:1313/posts/summary-first/</link>
+      <pubDate>Tue, 04 Feb 2025 19:10:44 +0800</pubDate>
+      <guid>http://localhost:1313/posts/summary-first/</guid>
+      <description>&lt;h3 id=&#34;回顾&#34;&gt;回顾&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;七八月：在家摆了两个月，考驾照，考到科二，加了一个游戏文案小组群。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;九月：到学校，高考砸了，被调剂。适应学校同时，开始对未来打算，也多亏了之前上网冲浪的经历，接触了些网络学习渠道，开始CS50。做的相当痛苦，写不出了problem。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;十月：反正就是磨，把cs50磨完了，感觉自己还是太笨了，磕磕绊绊，什么都不会写。其间，还到牛客上做题·写了些简单题~~（我，当时，太蠢了）~~，力扣上写了些简单题，感觉什么都没学会。尝试了许多方向，在写了几期游戏文案活动后，很挫败。（理想与现实的偏差，写不来东西，很痛苦，感觉自己不适合写这东西，很难是现在还有什么创作热情）&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;十一月：又跑去学了些其他东西，摸了些数字模拟电路的皮毛。开始看51和stm32单片机教程，51速通，stm32学到pwm，又去学了EDA，画电路板，摸了些皮毛，会简单画画电路板，上嘉立创白嫖了几份。开始cs106x&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;十二月：折磨，cs106x推进相当艰难，还是不会写，痛苦，我一直怀疑自己是否适合学着东西。折腾来折腾去，没一个主线，反正就是在试。力扣，代码随想录上又开始做了些题，还是太笨了，做不出来。期末要到了，准备些考试。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;</description>
     </item>

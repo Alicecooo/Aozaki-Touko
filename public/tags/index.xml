@@ -6,8 +6,15 @@
     <description>Recent content in Tags on Aozaki Touko</description>
     <generator>Hugo -- 0.154.5</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 20 Jan 2026 15:15:32 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 20 Feb 2026 00:56:34 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/Aozaki-Touko/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Summary</title>
+      <link>http://localhost:1313/Aozaki-Touko/tags/summary/</link>
+      <pubDate>Fri, 20 Feb 2026 00:56:34 +0800</pubDate>
+      <guid>http://localhost:1313/Aozaki-Touko/tags/summary/</guid>
+      <description></description>
+    </item>
     <item>
       <title>CS</title>
       <link>http://localhost:1313/Aozaki-Touko/tags/cs/</link>
@@ -20,13 +27,6 @@
       <link>http://localhost:1313/Aozaki-Touko/tags/os/</link>
       <pubDate>Sun, 26 Oct 2025 23:47:00 +0800</pubDate>
       <guid>http://localhost:1313/Aozaki-Touko/tags/os/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Summary</title>
-      <link>http://localhost:1313/Aozaki-Touko/tags/summary/</link>
-      <pubDate>Sat, 23 Aug 2025 19:10:44 +0800</pubDate>
-      <guid>http://localhost:1313/Aozaki-Touko/tags/summary/</guid>
       <description></description>
     </item>
     <item>

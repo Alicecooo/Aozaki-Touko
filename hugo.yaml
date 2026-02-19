@@ -45,7 +45,7 @@ params:
   homeInfoParams:
     Title: "欢迎回来"
     Content: 早安、晚安、谢谢、再见！
-    ImageUrl: /images/avatar.jpeg 
+    ImageUrl: /images/Ava.png 
     enableList: true
 
 

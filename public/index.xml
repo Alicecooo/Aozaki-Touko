@@ -6,8 +6,32 @@
     <description>Recent content on Aozaki Touko</description>
     <generator>Hugo -- 0.154.5</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 20 Feb 2026 00:56:34 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 25 Mar 2026 17:34:34 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/Aozaki-Touko/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Awesome Tech Share 重构失败记录</title>
+      <link>http://localhost:1313/Aozaki-Touko/posts/agent/</link>
+      <pubDate>Wed, 25 Mar 2026 17:34:34 +0800</pubDate>
+      <guid>http://localhost:1313/Aozaki-Touko/posts/agent/</guid>
+      <description>&lt;h2 id=&#34;序言&#34;&gt;&lt;strong&gt;序言&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;注意：本篇文章经过AI润色&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Awesome Tech Share是一个基于 MkDocs 的静态知识库，通过 GitHub Actions 自动化部署，涵盖 AI、CS、开发、学习成长等多个领域，内部积累了相当数量的 Markdown 文件，每篇文件里都手工嵌入了大量外部 URL。&lt;/p&gt;
+&lt;p&gt;随着文件数量的增长，手动整理的成本开始以指数级上升。于是我试图构建一个&amp;quot;URL 驱动的、可自我生长的知识录入系统&amp;quot;：输入一个 URL，程序自动抓取、提取、分类，并将内容以 Markdown 的形式写入知识库，最终通过 MkDocs 重新生成静态网站。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;一-项目起盘&#34;&gt;&lt;strong&gt;一 项目起盘&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;项目的初始设计围绕四个模块展开。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;解析层（spider.py）&lt;/strong&gt; 负责接收 URL 并抓取原始网页内容。
+&lt;strong&gt;语义处理层（brain.py）&lt;/strong&gt; 接入大语言模型，对抓取内容进行摘要提取，并与现有的知识树进行语义对齐，决定内容应写入哪个具体的 &lt;code&gt;.md&lt;/code&gt; 文件。
+&lt;strong&gt;配置更新层（mkdocs_updater.py）&lt;/strong&gt; 使用 &lt;code&gt;ruamel.yaml&lt;/code&gt; 来安全修改 &lt;code&gt;mkdocs.yml&lt;/code&gt; 的 &lt;code&gt;nav&lt;/code&gt; 导航结构，确保新生成的内容能够在前端正确挂载。最后，一个
+&lt;strong&gt;主流程脚本（grow_knowledge.py）&lt;/strong&gt; 将三者串联，提供 CLI 入口，并支持 &lt;code&gt;--dry-run&lt;/code&gt;、&lt;code&gt;--url-file&lt;/code&gt;、&lt;code&gt;--rebuild-from-docs&lt;/code&gt; 等操作模式。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;二-爬虫选型错误的决策&#34;&gt;&lt;strong&gt;二 爬虫选型：错误的决策&lt;/strong&gt;&lt;/h2&gt;
+&lt;p&gt;在整个项目中，爬虫层是第一个暴露出深层问题的地方，也是最容易被轻视的地方。&lt;/p&gt;
+&lt;h3 id=&#34;python-爬虫工具的演进与现实处境&#34;&gt;&lt;strong&gt;Python 爬虫工具的演进与现实处境&lt;/strong&gt;&lt;/h3&gt;
+&lt;p&gt;在 Python 生态中，爬虫工具的演进大致经历了三个阶段，每一代工具都在解决上一代的核心瓶颈，但也带来了新的复杂度。&lt;/p&gt;
+&lt;p&gt;最早一代是以 &lt;code&gt;requests + BeautifulSoup&lt;/code&gt; 为代表的静态解析方案。它的优点是极轻量、可控性强，但面对任何 JavaScript 渲染的页面就完全失效。现代互联网中，大量内容（包括技术博客、论文索引页、GitHub 项目页）都依赖客户端渲染，这使得静态解析在实际场景中的覆盖率非常有限。&lt;/p&gt;
+&lt;p&gt;第二代是以 &lt;code&gt;Scrapy&lt;/code&gt; 为代表的工程化框架。它引入了 Spider、Pipeline、Middleware 的分层概念，适合大规模结构化抓取任务。但 Scrapy 的核心设计是面向&amp;quot;批量同质化数据&amp;quot;的，对于 URL 来源极度杂乱、目标网站千差万别的场景，Scrapy 的配置复杂度远超收益。与此同时，Scrapy 对 JavaScript 渲染的支持依赖第三方中间件（如 &lt;code&gt;scrapy-playwright&lt;/code&gt;），集成成本不低。&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Summary-Third</title>
       <link>http://localhost:1313/Aozaki-Touko/posts/summary-third/</link>

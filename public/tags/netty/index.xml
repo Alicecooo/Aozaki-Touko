@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Netty on Aozaki Touko</title>
+    <link>http://localhost:1313/Aozaki-Touko/tags/netty/</link>
+    <description>Recent content in Netty on Aozaki Touko</description>
+    <generator>Hugo -- 0.154.5</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 31 May 2026 23:24:27 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/Aozaki-Touko/tags/netty/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Netty Notes</title>
+      <link>http://localhost:1313/Aozaki-Touko/posts/netty/</link>
+      <pubDate>Sun, 31 May 2026 23:24:27 +0800</pubDate>
+      <guid>http://localhost:1313/Aozaki-Touko/posts/netty/</guid>
+      <description>&lt;h2 id=&#34;netty介绍&#34;&gt;Netty介绍&lt;/h2&gt;
+&lt;p&gt;Netty 是一个异步事件驱动的网络应用程序框架，用于快速开发可维护、高性能的网络服务器和客户端&lt;/p&gt;
+&lt;p&gt;Netty 的对 JDK 自带的 NIO 的 API 进行封装，解决上述问题，主要特点有：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;设计优雅，适用于各种传输类型的统一 API， 阻塞和非阻塞 Socket 基于灵活且可扩展的事件模型&lt;/li&gt;
+&lt;li&gt;使用方便，详细记录的 Javadoc、用户指南和示例，没有其他依赖项&lt;/li&gt;
+&lt;li&gt;高性能，吞吐量更高，延迟更低，减少资源消耗，最小化不必要的内存复制&lt;/li&gt;
+&lt;li&gt;安全，完整的 SSL/TLS 和 StartTLS 支持&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Netty 的功能特性：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;传输服务：支持 BIO 和 NIO&lt;/li&gt;
+&lt;li&gt;容器集成：支持 OSGI、JBossMC、Spring、Guice 容器&lt;/li&gt;
+&lt;li&gt;协议支持：HTTP、Protobuf、二进制、文本、WebSocket 等一系列协议都支持，也支持通过实行编码解码逻辑来实现自定义协议&lt;/li&gt;
+&lt;li&gt;Core 核心：可扩展事件模型、通用通信 API、支持零拷贝的 ByteBuf 缓冲对象&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;h2 id=&#34;线程模型&#34;&gt;线程模型&lt;/h2&gt;
+&lt;h3 id=&#34;阻塞模型&#34;&gt;阻塞模型&lt;/h3&gt;
+&lt;p&gt;传统阻塞型 I/O 模式，每个连接都需要独立的线程完成数据的输入，业务处理，数据返回&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;p&gt;模型缺点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当并发数较大时，需要创建大量线程来处理连接，系统资源占用较大&lt;/li&gt;
+&lt;li&gt;连接建立后，如果当前线程暂时没有数据可读，则线程就阻塞在 read 操作上，造成线程资源浪费&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;reactor&#34;&gt;Reactor&lt;/h3&gt;
+&lt;h4 id=&#34;设计思想&#34;&gt;设计思想&lt;/h4&gt;
+&lt;p&gt;Reactor 模式，通过一个或多个输入同时传递给服务处理器的&lt;strong&gt;事件驱动处理模式&lt;/strong&gt;。 服务端程序处理传入的多路请求，并将它们同步分派给对应的处理线程，Reactor 模式也叫 Dispatcher 模式，即 I/O 多路复用统一监听事件，收到事件后分发（Dispatch 给某线程）&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

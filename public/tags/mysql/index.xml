@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Mysql on Aozaki Touko</title>
+    <link>http://localhost:1313/Aozaki-Touko/tags/mysql/</link>
+    <description>Recent content in Mysql on Aozaki Touko</description>
+    <generator>Hugo -- 0.154.5</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 01 Jun 2026 00:04:38 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/Aozaki-Touko/tags/mysql/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mysql Notes</title>
+      <link>http://localhost:1313/Aozaki-Touko/posts/mysql/</link>
+      <pubDate>Mon, 01 Jun 2026 00:04:38 +0800</pubDate>
+      <guid>http://localhost:1313/Aozaki-Touko/posts/mysql/</guid>
+      <description>&lt;h2 id=&#34;体系架构&#34;&gt;体系架构&lt;/h2&gt;
+&lt;h3 id=&#34;整体架构&#34;&gt;整体架构&lt;/h3&gt;
+&lt;p&gt;体系结构详解：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;第一层：网络连接层&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一些客户端和链接服务，包含本地 Socket 通信和大多数基于客户端/服务端工具实现的 TCP/IP 通信，主要完成一些类似于连接处理、授权认证、及相关的安全方案&lt;/li&gt;
+&lt;li&gt;在该层上引入了&lt;strong&gt;连接池&lt;/strong&gt; Connection Pool 的概念，管理缓冲用户连接，线程处理等需要缓存的需求&lt;/li&gt;
+&lt;li&gt;在该层上实现基于 SSL 的安全链接，服务器也会为安全接入的每个客户端验证它所具有的操作权限&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;第二层：核心服务层&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;查询缓存、分析器、优化器、执行器等，涵盖 MySQL 的大多数核心服务功能，所有的内置函数（日期、数学、加密函数等）
+&lt;ul&gt;
+&lt;li&gt;Management Serveices &amp;amp; Utilities：系统管理和控制工具，备份、安全、复制、集群等&lt;/li&gt;
+&lt;li&gt;SQL Interface：接受用户的 SQL 命令，并且返回用户需要查询的结果&lt;/li&gt;
+&lt;li&gt;Parser：SQL 语句分析器&lt;/li&gt;
+&lt;li&gt;Optimizer：查询优化器&lt;/li&gt;
+&lt;li&gt;Caches &amp;amp; Buffers：查询缓存，服务器会查询内部的缓存，如果缓存空间足够大，可以在大量读操作的环境中提升系统性能&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;所有&lt;strong&gt;跨存储引擎的功能&lt;/strong&gt;在这一层实现，如存储过程、触发器、视图等&lt;/li&gt;
+&lt;li&gt;在该层服务器会解析查询并创建相应的内部解析树，并对其完成相应的优化如确定表的查询顺序，是否利用索引等， 最后生成相应的执行操作&lt;/li&gt;
+&lt;li&gt;MySQL 中服务器层不管理事务，&lt;strong&gt;事务是由存储引擎实现的&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;第三层：存储引擎层&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Pluggable Storage Engines：存储引擎接口，MySQL 区别于其他数据库的重要特点就是其存储引擎的架构模式是插件式的（存储引擎是基于表的，而不是数据库）&lt;/li&gt;
+&lt;li&gt;存储引擎&lt;strong&gt;真正的负责了 MySQL 中数据的存储和提取&lt;/strong&gt;，服务器通过 API 和存储引擎进行通信&lt;/li&gt;
+&lt;li&gt;不同的存储引擎具有不同的功能，共用一个 Server 层，可以根据开发的需要，来选取合适的存储引擎&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;第四层：系统文件层&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;数据存储层，主要是将数据存储在文件系统之上，并完成与存储引擎的交互&lt;/li&gt;
+&lt;li&gt;File System：文件系统，保存配置文件、数据文件、日志文件、错误文件、二进制文件等&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://seazean.oss-cn-beijing.aliyuncs.com/img/DB/MySQL-%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84.png&#34;&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;建立连接&#34;&gt;建立连接&lt;/h3&gt;
+&lt;h4 id=&#34;连接器&#34;&gt;连接器&lt;/h4&gt;
+&lt;p&gt;池化技术：对于访问数据库来说，建立连接的代价是比较昂贵的，因为每个连接对应一个用来交互的线程，频繁的创建关闭连接比较耗费资源，有必要建立数据库连接池，以提高访问的性能&lt;/p&gt;
+&lt;p&gt;连接建立 TCP 以后需要做&lt;strong&gt;权限验证&lt;/strong&gt;，验证成功后可以进行执行 SQL。如果这时管理员账号对这个用户的权限做了修改，也不会影响已经存在连接的权限，只有再新建的连接才会使用新的权限设置&lt;/p&gt;
+&lt;p&gt;MySQL 服务器可以同时和多个客户端进行交互，所以要保证每个连接会话的隔离性（事务机制部分详解）&lt;/p&gt;
+&lt;p&gt;整体的执行流程：&lt;/p&gt;
+&lt;!-- raw HTML omitted --&gt;
+&lt;hr&gt;
+&lt;h4 id=&#34;权限信息&#34;&gt;权限信息&lt;/h4&gt;
+&lt;p&gt;grant 语句会同时修改数据表和内存，判断权限的时候使用的是内存数据&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

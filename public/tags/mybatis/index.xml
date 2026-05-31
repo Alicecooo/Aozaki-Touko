@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Mybatis on Aozaki Touko</title>
+    <link>http://localhost:1313/Aozaki-Touko/tags/mybatis/</link>
+    <description>Recent content in Mybatis on Aozaki Touko</description>
+    <generator>Hugo -- 0.154.5</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 31 May 2026 23:08:57 +0800</lastBuildDate>
+    <atom:link href="http://localhost:1313/Aozaki-Touko/tags/mybatis/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mybatis notes</title>
+      <link>http://localhost:1313/Aozaki-Touko/posts/mybatis/</link>
+      <pubDate>Sun, 31 May 2026 23:08:57 +0800</pubDate>
+      <guid>http://localhost:1313/Aozaki-Touko/posts/mybatis/</guid>
+      <description>&lt;h2 id=&#34;序&#34;&gt;序&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;在如今的AI时代，这都是些没用的东西了。但如果你是初学者，可以简单看看。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;基本操作&#34;&gt;基本操作&lt;/h2&gt;
+&lt;h3 id=&#34;相关api&#34;&gt;相关API&lt;/h3&gt;
+&lt;p&gt;Resources：加载资源的工具类&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;InputStream getResourceAsStream(String fileName)&lt;/code&gt;：通过类加载器返回指定资源的字节流
+&lt;ul&gt;
+&lt;li&gt;参数 fileName 是放在 src 的核心配置文件名：MyBatisConfig.xml&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;SqlSessionFactoryBuilder：构建器，用来获取 SqlSessionFactory 工厂对象&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;SqlSessionFactory build(InputStream is)&lt;/code&gt;：通过指定资源的字节输入流获取 SqlSession 工厂对象&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;SqlSessionFactory：获取 SqlSession 构建者对象的工厂接口&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;SqlSession openSession()&lt;/code&gt;：获取 SqlSession 构建者对象，并开启手动提交事务&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;SqlSession openSession(boolean)&lt;/code&gt;：获取 SqlSession 构建者对象，参数为 true 开启自动提交事务&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;SqlSession：构建者对象接口，用于执行 SQL、管理事务、接口代理&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SqlSession &lt;strong&gt;代表和数据库的一次会话&lt;/strong&gt;，用完必须关闭&lt;/li&gt;
+&lt;li&gt;SqlSession 和 Connection 一样都是非线程安全，每次使用都应该去获取新的对象&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;注：&lt;strong&gt;update 数据需要提交事务，或开启默认提交&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;SqlSession 常用 API：&lt;/p&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;方法&lt;/th&gt;
+          &lt;th&gt;说明&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;List&lt;!-- raw HTML omitted --&gt; selectList(String statement,Object parameter)&lt;/td&gt;
+          &lt;td&gt;执行查询语句，返回List集合&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;T selectOne(String statement,Object parameter)&lt;/td&gt;
+          &lt;td&gt;执行查询语句，返回一个结果对象&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;int insert(String statement,Object parameter)&lt;/td&gt;
+          &lt;td&gt;执行新增语句，返回影响行数&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;int update(String statement,Object parameter)&lt;/td&gt;
+          &lt;td&gt;执行删除语句，返回影响行数&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;int delete(String statement,Object parameter)&lt;/td&gt;
+          &lt;td&gt;执行修改语句，返回影响行数&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;void commit()&lt;/td&gt;
+          &lt;td&gt;提交事务&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;void rollback()&lt;/td&gt;
+          &lt;td&gt;回滚事务&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;T getMapper(Class&lt;!-- raw HTML omitted --&gt; cls)&lt;/td&gt;
+          &lt;td&gt;获取指定接口的代理实现类对象&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;void close()&lt;/td&gt;
+          &lt;td&gt;释放资源&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;映射配置&#34;&gt;映射配置&lt;/h3&gt;
+&lt;p&gt;映射配置文件包含了数据和对象之间的映射关系以及要执行的 SQL 语句，放在 src 目录下&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

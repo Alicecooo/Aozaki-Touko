@@ -3,8 +3,6 @@ languageCode: en-us
 title: Aozaki Touko
 theme: ["PaperMod"]
 
-
-
 # SEO & 构建控制
 enableRobotsTXT: true
 buildDrafts: false
@@ -16,6 +14,11 @@ minify:
   disableXML: true
   minifyOutput: true
 
+markup:
+  goldmark:
+  renderer:
+    unsafe: true
+
 # 核心参数（精简版）
 params:
   env: production
@@ -25,8 +28,6 @@ params:
   author: Alicecooo
   defaultTheme: auto
   disableThemeToggle: true
-
-
 
   # 界面展示
   ShowReadingTime: true
@@ -38,23 +39,17 @@ params:
   ShowRssButtonInSectionTermList: false
   UseHugoToc: false
 
-
-
-
   # 首页信息
   homeInfoParams:
     Title: "欢迎回来"
     Content: 早安、晚安、谢谢、再见！
-    ImageUrl: /images/Ava.png 
+    ImageUrl: /images/Ava.png
     enableList: true
-
-
 
   # 社交图标（保留核心）
   socialIcons:
     - name: github
       url: "https://github.com/Alicecooo"
-
 
   # 封面控制
   cover:
@@ -62,20 +57,19 @@ params:
     hiddenInList: true
     hiddenInSingle: true
 
-  showtoc: true  # 显示目录
-  tocopen: false  # 自动展开目录
-
+  showtoc: true # 显示目录
+  tocopen: false # 自动展开目录
 
 home:
-  sortBy: "date"           
-  sortOrder: "desc" 
+  sortBy: "date"
+  sortOrder: "desc"
 
 menu:
   main:
     - identifier: home
       name: Home
       url: /
-      weight: 10  
+      weight: 10
     - identifier: archives
       name: Archives
       url: /archives/
@@ -86,14 +80,9 @@ menu:
       weight: 30
     - identifier: About
       name: About
-      url: /About/ 
+      url: /About/
       weight: 40
 
 # 代码高亮（保留核心）
 pygmentsUseClasses: true
-markup:
-  highlight:
-    noClasses: false
 
-
- 

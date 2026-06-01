@@ -1,9 +1,9 @@
 ---
 date: '2026-05-31T23:59:40+08:00'
-draft: true
+draft: false
 tags: ["Zookeeper"]
-categories: ["后端"]
 title: 'Zookeeper Notes'
+summary: "Zookeeper 相关笔记"
 ---
 
 

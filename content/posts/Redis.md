@@ -2,8 +2,8 @@
 date: '2026-05-31T23:52:44+08:00'
 draft: false
 tags: ["Redis"]
-categories: ["后端"]
 title: 'Redis Notes'
+summary: "Redis 相关笔记"
 ---
 
 

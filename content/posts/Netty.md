@@ -2,8 +2,8 @@
 date: '2026-05-31T23:24:27+08:00'
 draft: false
 tags: ["Netty"]
-categories: ["后端"]
 title: 'Netty Notes'
+summary: "Netty 相关笔记"
 ---
 
 

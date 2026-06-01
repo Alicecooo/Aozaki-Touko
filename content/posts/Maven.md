@@ -2,8 +2,8 @@
 date: '2026-05-31T23:18:58+08:00'
 draft: false
 tags: ["Maven"]
-categories: ["后端"]
-title: 'Maven'
+title: 'Maven Notes'
+summary: "Maven 相关笔记"
 ---
 
 

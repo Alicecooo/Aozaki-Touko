@@ -2,8 +2,8 @@
 date: '2026-06-01T00:04:38+08:00'
 draft: false
 tags: ["Mysql"]
-categories: ["后端"]
 title: 'Mysql Notes'
+summary: "Mysql 相关笔记"
 ---
 
 
@@ -3522,6 +3522,7 @@ B+ 树为了保持索引的有序性，在插入新值的时候需要做相应�
 索引的设计可以遵循一些已有的原则，创建索引的时候请尽量考虑符合这些原则，便于提升索引的使用效率
 
 创建索引时的原则：
+
 * 对查询频次较高，且数据量比较大的表建立索引
 * 使用唯一索引，区分度越高，使用索引的效率越高
 * 索引字段的选择，最佳候选列应当从 where 子句的条件中提取，使用覆盖索引
@@ -7324,7 +7325,7 @@ long_query_time=10
 基本表：
 
 ![](https://seazean.oss-cn-beijing.aliyuncs.com/img/DB/普通表.png)
-     
+
 第一范式表：
 
 ![](https://seazean.oss-cn-beijing.aliyuncs.com/img/DB/第一范式.png)

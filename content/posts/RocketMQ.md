@@ -2,8 +2,8 @@
 date: '2026-05-31T23:57:25+08:00'
 draft: false
 tags: ["RocketMQ"]
-categories: ["后端"]
 title: 'RocketMQ Notes'
+summary: "RocketMQ 相关笔记"
 ---
 
 

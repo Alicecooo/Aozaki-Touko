@@ -3,6 +3,7 @@ date: '2025-08-23T19:10:44+08:00'
 draft: false
 title: 'Summary-Second'
 tags: ["Summary"]
+summary: "记录、回忆"
 ---
 
 ### 回顾
@@ -26,4 +27,3 @@ tags: ["Summary"]
 - "是我不知道如何做吗？"，“是我不能这样做吗？”。
 
 - 我想我是在逃避。
-

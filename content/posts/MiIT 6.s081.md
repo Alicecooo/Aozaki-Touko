@@ -2,8 +2,7 @@
 title: "MIT 6.s081 2025 Fall 实验记录"
 date: 2025-10-26T23:47:00+08:00 
 tags: ["OS"]                  
-draft: false                      
-categories: ["操作系统"]          # 可选：补充分类（也可留空）
+draft: false                              
 summary: "MIT 6.s081 2025秋季操作系统实验记录"  
 ---
 

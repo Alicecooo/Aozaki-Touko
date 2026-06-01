@@ -3,7 +3,7 @@ date: '2026-05-31T23:08:57+08:00'
 draft: false
 title: 'Mybatis notes'
 tags: ["Mybatis"] 
-categories: ["后端"]  
+summary: "Mybatis 相关笔记"  
 ---
 
 ## 序

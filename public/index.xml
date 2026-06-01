@@ -13,510 +13,63 @@
       <link>http://localhost:1313/Aozaki-Touko/posts/mysql/</link>
       <pubDate>Mon, 01 Jun 2026 00:04:38 +0800</pubDate>
       <guid>http://localhost:1313/Aozaki-Touko/posts/mysql/</guid>
-      <description>&lt;h2 id=&#34;体系架构&#34;&gt;体系架构&lt;/h2&gt;
-&lt;h3 id=&#34;整体架构&#34;&gt;整体架构&lt;/h3&gt;
-&lt;p&gt;体系结构详解：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;第一层：网络连接层&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;一些客户端和链接服务，包含本地 Socket 通信和大多数基于客户端/服务端工具实现的 TCP/IP 通信，主要完成一些类似于连接处理、授权认证、及相关的安全方案&lt;/li&gt;
-&lt;li&gt;在该层上引入了&lt;strong&gt;连接池&lt;/strong&gt; Connection Pool 的概念，管理缓冲用户连接，线程处理等需要缓存的需求&lt;/li&gt;
-&lt;li&gt;在该层上实现基于 SSL 的安全链接，服务器也会为安全接入的每个客户端验证它所具有的操作权限&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;第二层：核心服务层&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;查询缓存、分析器、优化器、执行器等，涵盖 MySQL 的大多数核心服务功能，所有的内置函数（日期、数学、加密函数等）
-&lt;ul&gt;
-&lt;li&gt;Management Serveices &amp;amp; Utilities：系统管理和控制工具，备份、安全、复制、集群等&lt;/li&gt;
-&lt;li&gt;SQL Interface：接受用户的 SQL 命令，并且返回用户需要查询的结果&lt;/li&gt;
-&lt;li&gt;Parser：SQL 语句分析器&lt;/li&gt;
-&lt;li&gt;Optimizer：查询优化器&lt;/li&gt;
-&lt;li&gt;Caches &amp;amp; Buffers：查询缓存，服务器会查询内部的缓存，如果缓存空间足够大，可以在大量读操作的环境中提升系统性能&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;所有&lt;strong&gt;跨存储引擎的功能&lt;/strong&gt;在这一层实现，如存储过程、触发器、视图等&lt;/li&gt;
-&lt;li&gt;在该层服务器会解析查询并创建相应的内部解析树，并对其完成相应的优化如确定表的查询顺序，是否利用索引等， 最后生成相应的执行操作&lt;/li&gt;
-&lt;li&gt;MySQL 中服务器层不管理事务，&lt;strong&gt;事务是由存储引擎实现的&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;第三层：存储引擎层&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Pluggable Storage Engines：存储引擎接口，MySQL 区别于其他数据库的重要特点就是其存储引擎的架构模式是插件式的（存储引擎是基于表的，而不是数据库）&lt;/li&gt;
-&lt;li&gt;存储引擎&lt;strong&gt;真正的负责了 MySQL 中数据的存储和提取&lt;/strong&gt;，服务器通过 API 和存储引擎进行通信&lt;/li&gt;
-&lt;li&gt;不同的存储引擎具有不同的功能，共用一个 Server 层，可以根据开发的需要，来选取合适的存储引擎&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;第四层：系统文件层&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;数据存储层，主要是将数据存储在文件系统之上，并完成与存储引擎的交互&lt;/li&gt;
-&lt;li&gt;File System：文件系统，保存配置文件、数据文件、日志文件、错误文件、二进制文件等&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://seazean.oss-cn-beijing.aliyuncs.com/img/DB/MySQL-%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84.png&#34;&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;建立连接&#34;&gt;建立连接&lt;/h3&gt;
-&lt;h4 id=&#34;连接器&#34;&gt;连接器&lt;/h4&gt;
-&lt;p&gt;池化技术：对于访问数据库来说，建立连接的代价是比较昂贵的，因为每个连接对应一个用来交互的线程，频繁的创建关闭连接比较耗费资源，有必要建立数据库连接池，以提高访问的性能&lt;/p&gt;
-&lt;p&gt;连接建立 TCP 以后需要做&lt;strong&gt;权限验证&lt;/strong&gt;，验证成功后可以进行执行 SQL。如果这时管理员账号对这个用户的权限做了修改，也不会影响已经存在连接的权限，只有再新建的连接才会使用新的权限设置&lt;/p&gt;
-&lt;p&gt;MySQL 服务器可以同时和多个客户端进行交互，所以要保证每个连接会话的隔离性（事务机制部分详解）&lt;/p&gt;
-&lt;p&gt;整体的执行流程：&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;hr&gt;
-&lt;h4 id=&#34;权限信息&#34;&gt;权限信息&lt;/h4&gt;
-&lt;p&gt;grant 语句会同时修改数据表和内存，判断权限的时候使用的是内存数据&lt;/p&gt;</description>
+      <description>Mysql 相关笔记</description>
+    </item>
+    <item>
+      <title>Zookeeper Notes</title>
+      <link>http://localhost:1313/Aozaki-Touko/posts/zookeeper/</link>
+      <pubDate>Sun, 31 May 2026 23:59:40 +0800</pubDate>
+      <guid>http://localhost:1313/Aozaki-Touko/posts/zookeeper/</guid>
+      <description>Zookeeper 相关笔记</description>
     </item>
     <item>
       <title>RocketMQ Notes</title>
       <link>http://localhost:1313/Aozaki-Touko/posts/rocketmq/</link>
       <pubDate>Sun, 31 May 2026 23:57:25 +0800</pubDate>
       <guid>http://localhost:1313/Aozaki-Touko/posts/rocketmq/</guid>
-      <description>&lt;h2 id=&#34;基本介绍&#34;&gt;基本介绍&lt;/h2&gt;
-&lt;h3 id=&#34;消息队列&#34;&gt;消息队列&lt;/h3&gt;
-&lt;h4 id=&#34;应用场景&#34;&gt;应用场景&lt;/h4&gt;
-&lt;p&gt;消息队列是一种先进先出的数据结构，常见的应用场景：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;应用解耦：系统的耦合性越高，容错性就越低&lt;/p&gt;
-&lt;p&gt;实例：用户创建订单后，耦合调用库存系统、物流系统、支付系统，任何一个子系统出了故障都会造成下单异常，影响用户使用体验。使用消息队列解耦合，比如物流系统发生故障，需要几分钟恢复，将物流系统要处理的数据缓存到消息队列中，用户的下单操作正常完成。等待物流系统正常后处理存在消息队列中的订单消息即可，终端系统感知不到物流系统发生过几分钟故障&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://seazean.oss-cn-beijing.aliyuncs.com/img/Frame/RocketMQ-%E8%A7%A3%E8%80%A6.png&#34;&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;流量削峰：应用系统如果遇到系统请求流量的瞬间猛增，有可能会将系统压垮，使用消息队列可以将大量请求缓存起来，分散到很长一段时间处理，这样可以提高系统的稳定性和用户体验&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://seazean.oss-cn-beijing.aliyuncs.com/img/Frame/RocketMQ-%E6%B5%81%E9%87%8F%E5%89%8A%E5%B3%B0.png&#34;&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;数据分发：让数据在多个系统更加之间进行流通，数据的产生方不需要关心谁来使用数据，只需要将数据发送到消息队列，数据使用方直接在消息队列中直接获取数据&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://seazean.oss-cn-beijing.aliyuncs.com/img/Frame/RocketMQ-%E6%95%B0%E6%8D%AE%E5%88%86%E5%8F%91.png&#34;&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h4 id=&#34;rocketmq--kafka&#34;&gt;RocketMQ / Kafka&lt;/h4&gt;
-&lt;p&gt;RocketMQ 对比 Kafka 的优点&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;支持 Pull和 Push 两种消息模式&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;支持延时消息、死信队列、消息重试、消息回溯、消息跟踪、事务消息等高级特性&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;对消息可靠性做了改进，&lt;strong&gt;保证消息不丢失并且至少消费一次&lt;/strong&gt;，与 Kafka 一样是先写 PageCache 再落盘，并且数据有多副本&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;RocketMQ 存储模型是所有的 Topic 都写到同一个 Commitlog 里，是一个 append only 操作，在海量 Topic 下也能将磁盘的性能发挥到极致，并且保持稳定的写入时延。Kafka 的吞吐非常高（零拷贝、操作系统页缓存、磁盘顺序写），但是在多 Topic 下时延不够稳定（顺序写入特性会被破坏从而引入大量的随机 I/O），不适合实时在线业务场景&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Kafka 比 RocketMQ 吞吐量高：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Kafka 将 Producer 端将多个小消息合并，采用异步批量发送的机制，当发送一条消息时，消息并没有发送到 Broker 而是缓存起来，直接向业务返回成功，当缓存的消息达到一定数量时再批量发送&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;减少了网络 I/O，提高了消息发送的性能，但是如果消息发送者宕机，会导致消息丢失，降低了可靠性&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;RocketMQ 缓存过多消息会导致频繁 GC，并且为了保证可靠性没有采用这种方式&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Topic 的 partition 数量过多时，Kafka 的性能不如 RocketMQ：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;两者都使用文件存储，但是 Kafka 是一个分区一个文件，Topic 过多时分区的总量也会增加，过多的文件导致对消息刷盘时出现文件竞争磁盘，造成性能的下降。&lt;strong&gt;一个分区只能被一个消费组中的一个消费线程进行消费&lt;/strong&gt;，因此可以同时消费的消费端也比较少&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;RocketMQ 所有队列都存储在一个文件中，每个队列存储的消息量也比较小，因此多 Topic 的对 RocketMQ 的性能的影响较小&lt;/p&gt;</description>
+      <description>RocketMQ 相关笔记</description>
     </item>
     <item>
       <title>Redis Notes</title>
       <link>http://localhost:1313/Aozaki-Touko/posts/redis/</link>
       <pubDate>Sun, 31 May 2026 23:52:44 +0800</pubDate>
       <guid>http://localhost:1313/Aozaki-Touko/posts/redis/</guid>
-      <description>&lt;h2 id=&#34;数据&#34;&gt;数据&lt;/h2&gt;
-&lt;h3 id=&#34;服务器&#34;&gt;服务器&lt;/h3&gt;
-&lt;p&gt;Redis 服务器将所有数据库保存在&lt;strong&gt;服务器状态 redisServer 结构&lt;/strong&gt;的 db 数组中，数组的每一项都是 redisDb 结构，代表一个数据库，每个数据库之间相互独立，共用Redis 内存，不区分大小。在初始化服务器时，根据 dbnum 属性决定创建数据库的数量，该属性由服务器配置的 database 选项决定，默认 16&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;struct&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;redisServer&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;// 保存服务器所有的数据库
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;redisDB&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;db&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;// 服务器数据库的数量
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;dbnum&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;&lt;strong&gt;在服务器内部&lt;/strong&gt;，客户端状态 redisClient 结构的 db 属性记录了目标数据库，是一个指向 redisDb 结构的指针&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;struct&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;redisClient&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;// 记录客户端正在使用的数据库，指向 redisServer.db 数组中的某一个 db
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;redisDB&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;db&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;每个 Redis 客户端都有目标数据库，执行数据库读写命令时目标数据库就会成为这些命令的操作对象，默认情况下 Redis 客户端的目标数据库为 0 号数据库，客户端可以执行 SELECT 命令切换目标数据库，原理是通过修改 redisClient.db 指针指向服务器中不同数据库&lt;/p&gt;
-&lt;p&gt;命令操作：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;select&lt;/span&gt; index &lt;span class=&#34;c1&#34;&gt;#切换数据库，index从0-15取值&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;move key db  &lt;span class=&#34;c1&#34;&gt;#数据移动到指定数据库，db是数据库编号&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ping   &lt;span class=&#34;c1&#34;&gt;#测试数据库是否连接正常，返回PONG&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; message &lt;span class=&#34;c1&#34;&gt;#控制台输出信息&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Redis 没有可以返回客户端目标数据库的命令，但是 redis-cli 客户端旁边会提示当前所使用的目标数据库&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;redis&amp;gt; SELECT &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; 
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;OK 
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;redis&lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;1&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;&amp;gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;键空间&#34;&gt;键空间&lt;/h3&gt;
-&lt;h4 id=&#34;key-space&#34;&gt;key space&lt;/h4&gt;
-&lt;p&gt;Redis 是一个键值对（key-value pair）数据库服务器，每个数据库都由一个 redisDb 结构表示，redisDb.dict &lt;strong&gt;字典中保存了数据库的所有键值对&lt;/strong&gt;，将这个字典称为键空间（key space）&lt;/p&gt;</description>
+      <description>Redis 相关笔记</description>
     </item>
     <item>
       <title>Netty Notes</title>
       <link>http://localhost:1313/Aozaki-Touko/posts/netty/</link>
       <pubDate>Sun, 31 May 2026 23:24:27 +0800</pubDate>
       <guid>http://localhost:1313/Aozaki-Touko/posts/netty/</guid>
-      <description>&lt;h2 id=&#34;netty介绍&#34;&gt;Netty介绍&lt;/h2&gt;
-&lt;p&gt;Netty 是一个异步事件驱动的网络应用程序框架，用于快速开发可维护、高性能的网络服务器和客户端&lt;/p&gt;
-&lt;p&gt;Netty 的对 JDK 自带的 NIO 的 API 进行封装，解决上述问题，主要特点有：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;设计优雅，适用于各种传输类型的统一 API， 阻塞和非阻塞 Socket 基于灵活且可扩展的事件模型&lt;/li&gt;
-&lt;li&gt;使用方便，详细记录的 Javadoc、用户指南和示例，没有其他依赖项&lt;/li&gt;
-&lt;li&gt;高性能，吞吐量更高，延迟更低，减少资源消耗，最小化不必要的内存复制&lt;/li&gt;
-&lt;li&gt;安全，完整的 SSL/TLS 和 StartTLS 支持&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Netty 的功能特性：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;传输服务：支持 BIO 和 NIO&lt;/li&gt;
-&lt;li&gt;容器集成：支持 OSGI、JBossMC、Spring、Guice 容器&lt;/li&gt;
-&lt;li&gt;协议支持：HTTP、Protobuf、二进制、文本、WebSocket 等一系列协议都支持，也支持通过实行编码解码逻辑来实现自定义协议&lt;/li&gt;
-&lt;li&gt;Core 核心：可扩展事件模型、通用通信 API、支持零拷贝的 ByteBuf 缓冲对象&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;h2 id=&#34;线程模型&#34;&gt;线程模型&lt;/h2&gt;
-&lt;h3 id=&#34;阻塞模型&#34;&gt;阻塞模型&lt;/h3&gt;
-&lt;p&gt;传统阻塞型 I/O 模式，每个连接都需要独立的线程完成数据的输入，业务处理，数据返回&lt;/p&gt;
-&lt;!-- raw HTML omitted --&gt;
-&lt;p&gt;模型缺点：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;当并发数较大时，需要创建大量线程来处理连接，系统资源占用较大&lt;/li&gt;
-&lt;li&gt;连接建立后，如果当前线程暂时没有数据可读，则线程就阻塞在 read 操作上，造成线程资源浪费&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id=&#34;reactor&#34;&gt;Reactor&lt;/h3&gt;
-&lt;h4 id=&#34;设计思想&#34;&gt;设计思想&lt;/h4&gt;
-&lt;p&gt;Reactor 模式，通过一个或多个输入同时传递给服务处理器的&lt;strong&gt;事件驱动处理模式&lt;/strong&gt;。 服务端程序处理传入的多路请求，并将它们同步分派给对应的处理线程，Reactor 模式也叫 Dispatcher 模式，即 I/O 多路复用统一监听事件，收到事件后分发（Dispatch 给某线程）&lt;/p&gt;</description>
+      <description>Netty 相关笔记</description>
     </item>
     <item>
-      <title>Maven</title>
+      <title>Maven Notes</title>
       <link>http://localhost:1313/Aozaki-Touko/posts/maven/</link>
       <pubDate>Sun, 31 May 2026 23:18:58 +0800</pubDate>
       <guid>http://localhost:1313/Aozaki-Touko/posts/maven/</guid>
-      <description>&lt;h2 id=&#34;依赖管理&#34;&gt;依赖管理&lt;/h2&gt;
-&lt;h3 id=&#34;依赖配置&#34;&gt;依赖配置&lt;/h3&gt;
-&lt;p&gt;依赖是指在当前项目中运行所需的 jar，依赖配置的格式如下：&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c&#34;&gt;&amp;lt;!--设置当前项目所依赖的所有jar--&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;&amp;lt;dependencies&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c&#34;&gt;&amp;lt;!--设置具体的依赖--&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c&#34;&gt;&amp;lt;!--依赖所属群组id--&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nt&#34;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;junit&lt;span class=&#34;nt&#34;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c&#34;&gt;&amp;lt;!--依赖所属项目id--&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nt&#34;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;junit&lt;span class=&#34;nt&#34;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c&#34;&gt;&amp;lt;!--依赖版本号--&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nt&#34;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;4.12&lt;span class=&#34;nt&#34;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;&amp;lt;/dependencies&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;依赖传递&#34;&gt;依赖传递&lt;/h3&gt;
-&lt;p&gt;依赖具有传递性，分两种：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;直接依赖：在当前项目中通过依赖配置建立的依赖关系&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;间接依赖：被依赖的资源如果依赖其他资源，则表明当前项目间接依赖其他资源（直接依赖和间接依赖是一个相对关系）&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;依赖传递的冲突问题：在依赖传递过程中产生了冲突，有三种优先法则&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;路径优先：当依赖中出现相同资源时，层级越深，优先级越低，反之则越高&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;声明优先：当资源在相同层级被依赖时，配置顺序靠前的覆盖靠后的&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;特殊优先：当同级配置了相同资源的不同版本时，后配置的覆盖先配置的&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;可选依赖&lt;/strong&gt;：对外隐藏当前所依赖的资源，不透明&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;    
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;junit&lt;span class=&#34;nt&#34;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;    
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;junit&lt;span class=&#34;nt&#34;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;    
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;4.11&lt;span class=&#34;nt&#34;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;    
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;lt;optional&amp;gt;&lt;/span&gt;true&lt;span class=&#34;nt&#34;&gt;&amp;lt;/optional&amp;gt;&lt;/span&gt; 
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c&#34;&gt;&amp;lt;!--默认是false，true以后就变得不透明--&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;&lt;strong&gt;排除依赖&lt;/strong&gt;：主动断开依赖的资源，被排除的资源无需指定版本&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-xml&#34; data-lang=&#34;xml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;&amp;lt;dependency&amp;gt;&lt;/span&gt;    
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;junit&lt;span class=&#34;nt&#34;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;    
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;junit&lt;span class=&#34;nt&#34;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;    
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;lt;version&amp;gt;&lt;/span&gt;4.12&lt;span class=&#34;nt&#34;&gt;&amp;lt;/version&amp;gt;&lt;/span&gt;    
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;lt;exclusions&amp;gt;&lt;/span&gt;        
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nt&#34;&gt;&amp;lt;exclusion&amp;gt;&lt;/span&gt;            
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;nt&#34;&gt;&amp;lt;groupId&amp;gt;&lt;/span&gt;org.hamcrest&lt;span class=&#34;nt&#34;&gt;&amp;lt;/groupId&amp;gt;&lt;/span&gt;  &lt;span class=&#34;c&#34;&gt;&amp;lt;!--排除这个资源--&amp;gt;&lt;/span&gt;            
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;nt&#34;&gt;&amp;lt;artifactId&amp;gt;&lt;/span&gt;hamcrest-core&lt;span class=&#34;nt&#34;&gt;&amp;lt;/artifactId&amp;gt;&lt;/span&gt;        
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nt&#34;&gt;&amp;lt;/exclusion&amp;gt;&lt;/span&gt;    
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;lt;/exclusions&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;&amp;lt;/dependency&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h3 id=&#34;依赖范围&#34;&gt;依赖范围&lt;/h3&gt;
-&lt;p&gt;依赖的 jar 默认情况可以在任何地方可用，可以通过 &lt;code&gt;scope&lt;/code&gt; 标签设定其作用范围，有三种：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;主程序范围有效（src/main 目录范围内）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;测试程序范围内有效（src/test 目录范围内）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;是否参与打包（package 指令范围内）&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;code&gt;scope&lt;/code&gt; 标签的取值有四种：&lt;code&gt;compile,test,provided,runtime&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://seazean.oss-cn-beijing.aliyuncs.com/img/Frame/Maven%E4%BE%9D%E8%B5%96%E8%8C%83%E5%9B%B4.png&#34;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;依赖范围的传递性：&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://seazean.oss-cn-beijing.aliyuncs.com/img/Frame/Maven%E4%BE%9D%E8%B5%96%E8%8C%83%E5%9B%B4%E7%9A%84%E4%BC%A0%E9%80%92%E6%80%A7.png&#34;&gt;&lt;/p&gt;
-&lt;h2 id=&#34;生命周期&#34;&gt;生命周期&lt;/h2&gt;
-&lt;h3 id=&#34;相关事件&#34;&gt;相关事件&lt;/h3&gt;
-&lt;p&gt;Maven 的构建生命周期描述的是一次构建过程经历了多少个事件&lt;/p&gt;
-&lt;p&gt;最常用的一套流程：compile → test-compile → test → package → install&lt;/p&gt;</description>
+      <description>Maven 相关笔记</description>
     </item>
     <item>
       <title>Mybatis notes</title>
       <link>http://localhost:1313/Aozaki-Touko/posts/mybatis/</link>
       <pubDate>Sun, 31 May 2026 23:08:57 +0800</pubDate>
       <guid>http://localhost:1313/Aozaki-Touko/posts/mybatis/</guid>
-      <description>&lt;h2 id=&#34;序&#34;&gt;序&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;在如今的AI时代，这都是些没用的东西了。但如果你是初学者，可以简单看看。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;基本操作&#34;&gt;基本操作&lt;/h2&gt;
-&lt;h3 id=&#34;相关api&#34;&gt;相关API&lt;/h3&gt;
-&lt;p&gt;Resources：加载资源的工具类&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;InputStream getResourceAsStream(String fileName)&lt;/code&gt;：通过类加载器返回指定资源的字节流
-&lt;ul&gt;
-&lt;li&gt;参数 fileName 是放在 src 的核心配置文件名：MyBatisConfig.xml&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;SqlSessionFactoryBuilder：构建器，用来获取 SqlSessionFactory 工厂对象&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;SqlSessionFactory build(InputStream is)&lt;/code&gt;：通过指定资源的字节输入流获取 SqlSession 工厂对象&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;SqlSessionFactory：获取 SqlSession 构建者对象的工厂接口&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;SqlSession openSession()&lt;/code&gt;：获取 SqlSession 构建者对象，并开启手动提交事务&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;SqlSession openSession(boolean)&lt;/code&gt;：获取 SqlSession 构建者对象，参数为 true 开启自动提交事务&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;SqlSession：构建者对象接口，用于执行 SQL、管理事务、接口代理&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;SqlSession &lt;strong&gt;代表和数据库的一次会话&lt;/strong&gt;，用完必须关闭&lt;/li&gt;
-&lt;li&gt;SqlSession 和 Connection 一样都是非线程安全，每次使用都应该去获取新的对象&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;注：&lt;strong&gt;update 数据需要提交事务，或开启默认提交&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;SqlSession 常用 API：&lt;/p&gt;
-&lt;table&gt;
-  &lt;thead&gt;
-      &lt;tr&gt;
-          &lt;th&gt;方法&lt;/th&gt;
-          &lt;th&gt;说明&lt;/th&gt;
-      &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-      &lt;tr&gt;
-          &lt;td&gt;List&lt;!-- raw HTML omitted --&gt; selectList(String statement,Object parameter)&lt;/td&gt;
-          &lt;td&gt;执行查询语句，返回List集合&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;T selectOne(String statement,Object parameter)&lt;/td&gt;
-          &lt;td&gt;执行查询语句，返回一个结果对象&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;int insert(String statement,Object parameter)&lt;/td&gt;
-          &lt;td&gt;执行新增语句，返回影响行数&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;int update(String statement,Object parameter)&lt;/td&gt;
-          &lt;td&gt;执行删除语句，返回影响行数&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;int delete(String statement,Object parameter)&lt;/td&gt;
-          &lt;td&gt;执行修改语句，返回影响行数&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;void commit()&lt;/td&gt;
-          &lt;td&gt;提交事务&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;void rollback()&lt;/td&gt;
-          &lt;td&gt;回滚事务&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;T getMapper(Class&lt;!-- raw HTML omitted --&gt; cls)&lt;/td&gt;
-          &lt;td&gt;获取指定接口的代理实现类对象&lt;/td&gt;
-      &lt;/tr&gt;
-      &lt;tr&gt;
-          &lt;td&gt;void close()&lt;/td&gt;
-          &lt;td&gt;释放资源&lt;/td&gt;
-      &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-&lt;hr&gt;
-&lt;h3 id=&#34;映射配置&#34;&gt;映射配置&lt;/h3&gt;
-&lt;p&gt;映射配置文件包含了数据和对象之间的映射关系以及要执行的 SQL 语句，放在 src 目录下&lt;/p&gt;</description>
+      <description>Mybatis 相关笔记</description>
     </item>
     <item>
       <title>Summary-Third</title>
       <link>http://localhost:1313/Aozaki-Touko/posts/summary-third/</link>
       <pubDate>Fri, 20 Feb 2026 00:56:34 +0800</pubDate>
       <guid>http://localhost:1313/Aozaki-Touko/posts/summary-third/</guid>
-      <description>&lt;p&gt;&lt;strong&gt;好的，欢迎回来&lt;/strong&gt;&lt;/p&gt;
-&lt;h1 id=&#34;写在开头&#34;&gt;写在开头&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;在经过一段时间后，我又一次的做在了电脑旁边。也算是拖了很长时间了。之前我一直没有找到一个合适的切入点来讲述。过去写的总觉得没什么“趣味”。按照时间，依照罗列，也算是干瘪过头了，怎么来讲，一篇给自己的流水账。&lt;/li&gt;
-&lt;li&gt;扯的有点远了，让我们回来。我自我对上一学期的评价是差强人意，无论是学习还是其他方面吧。干了很多事情，但是也是各种情况，也是只做到了完成。&lt;/li&gt;
-&lt;li&gt;一鼓作气，再而衰，三而竭。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;一-刻意训练&#34;&gt;一 刻意训练&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;在学校里，空余时间主要完成了Mit6.s081、计算机网络和一些算法。当然还有之前的未修几门课了。（ps：总算不用面对那个离散老师了，上一次课就布置作业，还麻烦的要求交笔记、写做题过程。但最后考试前另外一个老师直接给了范围。哎、毫无意义）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;但这是些未经刻意训练的知识，或者说我学的大部分内容我都未经过（长时间）刻意训练。我能够理解相关的概念 ，对内容有个印象。但让我却无法对其侃侃而谈。当我准备开口，大脑会发生卡壳，有很多的概念交织在一起。嘴开始动，言语冒出，最开始是些语言印象，然后模糊不清，语言逻辑混乱，嘴开始结巴，最后嘴巴闭上，开始沉默。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;是我不会，不好说。我会吗，好像也不全是。这还只是我已经学习过的内容了，更不用说那些仅仅掠过几眼的八股了。更何况那些数量还更多。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;这是第一个点了，我的大多数知识没有刻意训练，只是可供理解的内容。对自己来说，如会！。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;其实也不全是这样，写算法的时候倒是没有这样，看例题，模仿，写。不过好像也没啥意思。我已经感受出来自己不是一个聪明脑子了，没有短时间高强度输入并将起运用的能力，会一种类型真是多写多练了。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;二-日记总结&#34;&gt;二 日记/总结&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;在10月开始的时候，我开始了另一项工作，每天记录自己的所做，试图给与明天的自己反思。在经历了几个月的记录后。我的承认这是件“非常非常非常”困难的事情，如今写每天总结对于我自己已经沦落为了写日记。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;我来描述下整个历程，起初的时候是一种“兴奋”感，（听起来有点莫名奇妙，但是对我的确如此），把每天的日程量化起来，每天看着那些“学习数字”，晚上写点无用小想法，收获点赞，还是蛮有成就感的。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;然后，“兴奋”感开始消散，加上很多时候，无法完美的记录每一天，总会有时间误差和杂事。你的日程开始不能够真实的反应自己的每天，会有一种虚假感，自己其实没有做到日程表中那个虚假的、学习了一下午的自己。更然后，当你某天被一个弱智Bug卡了几个小时但在时间记录上却显示自己学习几个小时的时候，你会感觉毫无意义，自己并没有学到什么东西。同时你会发现自己并不会因为昨天晚上写点总结就即刻改变，每天的开始记录单薄，最后变的成为记录本身。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;写这篇文章的时候，我已经断了四五天了，这几天一方面春节探亲去了，另一方也是我给自己放假了（打了几天Galgame、其他游戏。这个稍后再说）。现在的心中并没有开始的那种“兴奋”感了，空在弥漫，这或许是某种程度的把一件事情变成工作吗。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;当然，你要问我还写不写这些东西。我肯定是写的。明天回复。毕竟回忆自己的过去是件相当有意思的事情，趁着不上班的时候写点东西也挺不错的，写给未来的自己呗（自己看自己写小作文，还是不得不品的一环）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;我仍旧喜欢表达的，写点无用无趣的小故事，讲点没头没脑小体悟。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;三-newoldworld&#34;&gt;三 New/Old/World&lt;/h1&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;这里是想记录一下今年想要做的事情。毕竟也不知道自己是否能够完成。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;跟上面的刻意训练有关，减少对于外界的关注，专注自己手上的内容。&lt;/strong&gt; 过去的一年吧，也不是一年很多年，我都是一个网上冲浪很多的人，看各种各样的消息八卦论坛消息，虽然我几乎从不发表观点。这东西跟短视频一样，很多时候被情绪牵着走，被动的接受消息，牵着我走。大量的琐碎时间被浪费掉了。当然让我完全改变也不现实，我想的是少刷几个社交媒体，尽量减少这样的操作。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;少玩随机性高，强PVP，一局一把的游戏，尽量看或玩花费一段时间就可收获一段体验、情感或叙事上面的东西。&lt;/strong&gt; 这些游戏并不是不好，也不是不好玩，只是它们像时间的黑洞，同时会干扰自己。比如：CSGO，虽然我只是每周倒腾箱子赚点小垃圾，但只要玩这个游戏，我自己就容易的关注电竞，看比赛，看各种论坛。同时想着提升自己，让自己每周打箱子不要那么被暴打。打完也总会有种空虚感，这又会驱动自己去打个游戏。也不是说不好，这些行为本身就是游戏好玩的一方面，好玩才会去在乎那么多。但是现在我还是觉得时间倾向或许可以尽量改变一些。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;给自己看过的信息输出类内容写一句话。&lt;/strong&gt;  强迫性行为。虽然我不怎么看短视频，但我看出长视频也没记住什么，大量的内容看完就忘。很多很有趣的东西，都没有记住，假装学习，假装输入，哎。以前吃饭的时候有看耗子视频呗，现在想来那么多期视频，如今我让回忆起来，只剩下了名字了。还有各种科普，历史，电影，那些自己看过的东西，能不能留下东西。我试着做这件事情，如果我做到的话，我会给大家分享。（ps：一种试图留下痕迹，让我写每次写小作文感觉也不现实）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;放过自己的博客&lt;/strong&gt;。之前的时候我想着听些博客学习，好吧其实啥也学到，信息从脑子中过，假装收获。（除非我刻意记录，像之前那个算法）过去我总想着自己空闲时候，找到东西看来放松。根本不现实，放松与内容根本不合适。些许可以多听音乐。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;清单与清单与清单&lt;/strong&gt;。我不知道你们有没有这样感觉，自己特别想看某个电影、小说或游戏，反正是各种各样的内容，但是因为它要花费一段长时间，就很难去打开。然后很容易玩之前说的那种一局一把的游戏，但是这些又会挤压你原本的时间，然后你只能把这些内容列入一个又一个的清单当中，然后这个清单越来越长，然后你就越不容易打开。总是被困在其中。跟上面连起来了。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;试下意识用AI总结看到任何输出/观点类内容&lt;/strong&gt;。不知道你看到这里又没有做呢，答案显而易见。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;strong&gt;多当一个输出者和创作者&lt;/strong&gt;。我喜欢写作。喜欢叙事。喜欢各种各样人类情感的东西。所以我喜欢分享，今年我想写出更多的东西。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;四-未曾改变&#34;&gt;四 未曾改变&lt;/h1&gt;
-&lt;p&gt;下面是些不明觉厉小故事和体验。&lt;/p&gt;
-&lt;p&gt;一&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;又是一年春季了。我是感觉自己这个县下镇属附近的村子好多年都是如此，未曾改变。&lt;/li&gt;
-&lt;li&gt;有时候感觉挺割裂的。感觉外面变化的很大，家里却又感觉毫无改变，除了镇上门店的改换。&lt;/li&gt;
-&lt;li&gt;有时候感觉挺割裂的。感觉外面又没什么区别，我上大学父母送我去的的时候，感觉城市没什么变化，门店，街道，除了楼更高，房子更大，似乎也没什么区别。&lt;/li&gt;
-&lt;li&gt;真是略带苦恼了。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;二&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;我该怎么说我的父母呢？&lt;/li&gt;
-&lt;li&gt;大家似乎总是互相不能理解，我不太喜欢酒，因为父母总是因此吵架。&lt;/li&gt;
-&lt;li&gt;大家似乎总是很拧巴，我也是。我不知道怎么跟父母开口。我奶奶问我，为什么晚上总是睡觉很晚，问我在在学校学了些什么。想着我能带个女朋友。唠叨着，唠叨着。唠叨着&lt;/li&gt;
-&lt;li&gt;我却只能说。有自己的安排。没法解释。我很忙。我希望她能如此缄默。&lt;/li&gt;
-&lt;li&gt;真是略带矛盾了。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;三&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;小的时候从觉得上学漫长，现在我觉得很快很快，又该大一岁了。&lt;/li&gt;
-&lt;li&gt;推了几部Galgame。&lt;/li&gt;
-&lt;li&gt;我该怎么讲呢？&lt;/li&gt;
-&lt;li&gt;乐事薯片，看起来很多，但都是空气。是饺子，但好吃的的就是那点醋。&lt;/li&gt;
-&lt;li&gt;真是略带奇怪了。&lt;/li&gt;
-&lt;/ul&gt;</description>
+      <description>记录、回忆</description>
     </item>
     <item>
-      <title>算法记录(一)</title>
-      <link>http://localhost:1313/Aozaki-Touko/posts/%E7%AE%97%E6%B3%95%E8%AE%B0%E5%BD%95%E4%B8%80/</link>
+      <title>算法: 滑动窗口</title>
+      <link>http://localhost:1313/Aozaki-Touko/posts/%E7%AE%97%E6%B3%95%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/</link>
       <pubDate>Tue, 20 Jan 2026 15:15:32 +0800</pubDate>
-      <guid>http://localhost:1313/Aozaki-Touko/posts/%E7%AE%97%E6%B3%95%E8%AE%B0%E5%BD%95%E4%B8%80/</guid>
-      <description>&lt;h1 id=&#34;前置&#34;&gt;前置&lt;/h1&gt;
-&lt;h2 id=&#34;定长&#34;&gt;定长&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;定长处理比较容易，不用关心窗口的大小，只用针对满足特定数组的条件进行处理判断。&lt;/li&gt;
-&lt;li&gt;主要的思路如下：&lt;/li&gt;
-&lt;li&gt;窗口右端点在 i 时，由于窗口长度为 k，所以窗口左端点为 i−k+1。
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;三步：入-更新-出。&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;入&lt;/strong&gt;：下标为 i 的元素进入窗口，更新相关统计量。如果窗口左端点 i−k+1&amp;lt;0，则尚未形成第一个窗口，重复第一步。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;更新&lt;/strong&gt;：更新答案。&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;出&lt;/strong&gt;：下标为 i−k+1 的元素离开窗口，更新相关统计量，为下一个循环做准备。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&#34;不定长&#34;&gt;不定长&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;不定长滑动窗口主要分为三类：求最长子数组，求最短子数组，求子数组个数。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;求最长子数组和最短子数组，还是入——更新——出，三步走。不过会略有不同。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;更新：下标为 i 的元素进入。如果满足条件，加入，重复，继续扩大，直到遇到不合适情况。&lt;/li&gt;
-&lt;li&gt;出：下标为 left 的元素离开窗口，left++ ，记录此时带窗口大小 i-left+1，为下一个循环做准备。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;求子数组个数&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;越短越合法
-一般要写 ans += right - left + 1。内层循环结束后，[left, right] 这个子数组是满足题目要求的。由于子数组越短，越能满足题目要求，所以除了 [left, right]，还有 [left+1, right],[left+2, right],…,[right, right] 都是满足要求的。也就是说，当右端点固定在 right 时，左端点在 left, left+1, left+2,…, right 的所有子数组都是满足要求的，这一共有 right−left+1 个。&lt;/li&gt;
-&lt;li&gt;越长越合法
-一般要写 ans += left。内层循环结束后，[left, right] 这个子数组是不满足题目要求的，但在退出循环之前的最后一轮循环，[left−1, right] 是满足题目要求的。由于子数组越长，越能满足题目要求，所以除了 [left−1, right]，还有 [left−2, right],[left−3, right],…,[0, right] 都是满足要求的。也就是说，当右端点固定在 right 时，左端点在 0,1,2,…, left−1 的所有子数组都是满足要求的，这一共有 left 个。我们关注的是 left−1 的合法性，而不是 left。&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;恰好型滑动&lt;/p&gt;</description>
+      <guid>http://localhost:1313/Aozaki-Touko/posts/%E7%AE%97%E6%B3%95%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3/</guid>
+      <description>算法 相关笔记</description>
     </item>
     <item>
       <title>MIT 6.s081 2025 Fall 实验记录</title>
@@ -530,39 +83,7 @@
       <link>http://localhost:1313/Aozaki-Touko/posts/summary-second/</link>
       <pubDate>Sat, 23 Aug 2025 19:10:44 +0800</pubDate>
       <guid>http://localhost:1313/Aozaki-Touko/posts/summary-second/</guid>
-      <description>&lt;h3 id=&#34;回顾&#34;&gt;回顾&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;还是拖了太长时间了，本来应该在暑假开始写完的。结果一直拖到了现在，真是罪过了。很高兴，我在下学期成功的完成了转专业，但也因此欠了好些课程（学校的程序流程真是漫长），日子一天也就那样过去，补些高数大物课，做些没什么用途的实验，应付应付作业，以及开我的 CSAPP，拖拖拉拉的，就像这个暑假一样。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;时间，永不复焉。我记得刚开学的时。弄了些记录每日花费时间的流程，料想反思总结一类的，结果也是渐渐的丢走了，好像都是我自己的问题。开学的时候大抵是二三月，那时候就是在准备转专业，学一些后端的东西，或者用看更合适，毕竟，都没怎么记在脑子中。这些流程花了一个月的时间，在四月完成，到七月的放假，除去应付课业的时间。我好像并没有完成些什么，人也是变得越来拖拉，跟舍友打游戏，摆烂。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;之前的时候弄了些 STM 32 玩了玩，又一个认清自己的过程，一开始了解的时候感觉特别有意思，但渐渐的，看着那些电路，作板，焊了些东西，发现自己不是很热爱。暑假的时候尝试了图灵完备，也是玩不下去，机组对我来说真是特别特别折磨的一门课，读不下去，十分痛苦。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;七月末的时候把驾照考了出来，日子的一天又一天过去，“为什么不好好利用呢？“，念头总是浮现在脑海中，但这好像是我自己选的路。消磨，消磨，消磨，总是如此，特别容易在完成一个目标之后，在，某个时间段延展。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;我记得在高中的时候也是，放假的时候总是消磨，不是浪费，而是消磨，不想去写那些作业，也不想去看那些东西，尽管它们很有用。无数次给自己定了目标，想着了解一些兴趣爱好，多读一些有趣的书。但却往往时间与作业赛跑，书也只有在学校才看的下去。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;起床到九十点，吃饭，消磨时间，玩手机，玩游戏，又或者干些琐事，其实清楚但没有改变，一次又一次，直到夜晚，然后又是一天。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;家是在乡下，有时会跟奶奶上田，帮他运些东西。天总是很蓝，一层又一层的云缠上面，我骑着小电驴，这样走着。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;我不太喜欢在家里面呆着，父母总是催促我出去转转走走，不知道该怎么诉说，这不是第一个暑假了，往年很多很多次，尚也如此。我想着挣钱，想着好好上公开课。争取明年找到实习，反却总是拖延。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&amp;ldquo;是我不知道如何做吗？&amp;quot;，“是我不能这样做吗？”。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;我想我是在逃避。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;</description>
+      <description>记录、回忆</description>
     </item>
     <item>
       <title>CSAPP</title>
@@ -583,24 +104,7 @@
       <link>http://localhost:1313/Aozaki-Touko/posts/summary-first/</link>
       <pubDate>Tue, 04 Feb 2025 19:10:44 +0800</pubDate>
       <guid>http://localhost:1313/Aozaki-Touko/posts/summary-first/</guid>
-      <description>&lt;h3 id=&#34;回顾&#34;&gt;回顾&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;七八月：在家摆了两个月，考驾照，考到科二，加了一个游戏文案小组群。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;九月：到学校，高考砸了，被调剂。适应学校同时，开始对未来打算，也多亏了之前上网冲浪的经历，接触了些网络学习渠道，开始CS50。做的相当痛苦，写不出了problem。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;十月：反正就是磨，把cs50磨完了，感觉自己还是太笨了，磕磕绊绊，什么都不会写。其间，还到牛客上做题·写了些简单题~~（我，当时，太蠢了）~~，力扣上写了些简单题，感觉什么都没学会。尝试了许多方向，在写了几期游戏文案活动后，很挫败。（理想与现实的偏差，写不来东西，很痛苦，感觉自己不适合写这东西，很难是现在还有什么创作热情）&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;十一月：又跑去学了些其他东西，摸了些数字模拟电路的皮毛。开始看51和stm32单片机教程，51速通，stm32学到pwm，又去学了EDA，画电路板，摸了些皮毛，会简单画画电路板，上嘉立创白嫖了几份。开始cs106x&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;十二月：折磨，cs106x推进相当艰难，还是不会写，痛苦，我一直怀疑自己是否适合学着东西。折腾来折腾去，没一个主线，反正就是在试。力扣，代码随想录上又开始做了些题，还是太笨了，做不出来。期末要到了，准备些考试。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;</description>
+      <description>记录、回忆</description>
     </item>
   </channel>
 </rss>

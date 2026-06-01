@@ -13,55 +13,7 @@
       <link>http://localhost:1313/Aozaki-Touko/posts/rocketmq/</link>
       <pubDate>Sun, 31 May 2026 23:57:25 +0800</pubDate>
       <guid>http://localhost:1313/Aozaki-Touko/posts/rocketmq/</guid>
-      <description>&lt;h2 id=&#34;基本介绍&#34;&gt;基本介绍&lt;/h2&gt;
-&lt;h3 id=&#34;消息队列&#34;&gt;消息队列&lt;/h3&gt;
-&lt;h4 id=&#34;应用场景&#34;&gt;应用场景&lt;/h4&gt;
-&lt;p&gt;消息队列是一种先进先出的数据结构，常见的应用场景：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;应用解耦：系统的耦合性越高，容错性就越低&lt;/p&gt;
-&lt;p&gt;实例：用户创建订单后，耦合调用库存系统、物流系统、支付系统，任何一个子系统出了故障都会造成下单异常，影响用户使用体验。使用消息队列解耦合，比如物流系统发生故障，需要几分钟恢复，将物流系统要处理的数据缓存到消息队列中，用户的下单操作正常完成。等待物流系统正常后处理存在消息队列中的订单消息即可，终端系统感知不到物流系统发生过几分钟故障&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://seazean.oss-cn-beijing.aliyuncs.com/img/Frame/RocketMQ-%E8%A7%A3%E8%80%A6.png&#34;&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;流量削峰：应用系统如果遇到系统请求流量的瞬间猛增，有可能会将系统压垮，使用消息队列可以将大量请求缓存起来，分散到很长一段时间处理，这样可以提高系统的稳定性和用户体验&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://seazean.oss-cn-beijing.aliyuncs.com/img/Frame/RocketMQ-%E6%B5%81%E9%87%8F%E5%89%8A%E5%B3%B0.png&#34;&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;数据分发：让数据在多个系统更加之间进行流通，数据的产生方不需要关心谁来使用数据，只需要将数据发送到消息队列，数据使用方直接在消息队列中直接获取数据&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://seazean.oss-cn-beijing.aliyuncs.com/img/Frame/RocketMQ-%E6%95%B0%E6%8D%AE%E5%88%86%E5%8F%91.png&#34;&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h4 id=&#34;rocketmq--kafka&#34;&gt;RocketMQ / Kafka&lt;/h4&gt;
-&lt;p&gt;RocketMQ 对比 Kafka 的优点&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;支持 Pull和 Push 两种消息模式&lt;/li&gt;
-&lt;/ul&gt;
-&lt;ul&gt;
-&lt;li&gt;支持延时消息、死信队列、消息重试、消息回溯、消息跟踪、事务消息等高级特性&lt;/li&gt;
-&lt;li&gt;对消息可靠性做了改进，&lt;strong&gt;保证消息不丢失并且至少消费一次&lt;/strong&gt;，与 Kafka 一样是先写 PageCache 再落盘，并且数据有多副本&lt;/li&gt;
-&lt;li&gt;RocketMQ 存储模型是所有的 Topic 都写到同一个 Commitlog 里，是一个 append only 操作，在海量 Topic 下也能将磁盘的性能发挥到极致，并且保持稳定的写入时延。Kafka 的吞吐非常高（零拷贝、操作系统页缓存、磁盘顺序写），但是在多 Topic 下时延不够稳定（顺序写入特性会被破坏从而引入大量的随机 I/O），不适合实时在线业务场景&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Kafka 比 RocketMQ 吞吐量高：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;Kafka 将 Producer 端将多个小消息合并，采用异步批量发送的机制，当发送一条消息时，消息并没有发送到 Broker 而是缓存起来，直接向业务返回成功，当缓存的消息达到一定数量时再批量发送&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;减少了网络 I/O，提高了消息发送的性能，但是如果消息发送者宕机，会导致消息丢失，降低了可靠性&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;RocketMQ 缓存过多消息会导致频繁 GC，并且为了保证可靠性没有采用这种方式&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Topic 的 partition 数量过多时，Kafka 的性能不如 RocketMQ：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;两者都使用文件存储，但是 Kafka 是一个分区一个文件，Topic 过多时分区的总量也会增加，过多的文件导致对消息刷盘时出现文件竞争磁盘，造成性能的下降。&lt;strong&gt;一个分区只能被一个消费组中的一个消费线程进行消费&lt;/strong&gt;，因此可以同时消费的消费端也比较少&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;RocketMQ 所有队列都存储在一个文件中，每个队列存储的消息量也比较小，因此多 Topic 的对 RocketMQ 的性能的影响较小&lt;/p&gt;</description>
+      <description>RocketMQ 相关笔记</description>
     </item>
   </channel>
 </rss>

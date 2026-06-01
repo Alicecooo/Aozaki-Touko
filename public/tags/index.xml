@@ -6,8 +6,50 @@
     <description>Recent content in Tags on Aozaki Touko</description>
     <generator>Hugo -- 0.154.5</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 31 May 2026 23:08:57 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 01 Jun 2026 00:04:38 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/Aozaki-Touko/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mysql</title>
+      <link>http://localhost:1313/Aozaki-Touko/tags/mysql/</link>
+      <pubDate>Mon, 01 Jun 2026 00:04:38 +0800</pubDate>
+      <guid>http://localhost:1313/Aozaki-Touko/tags/mysql/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Zookeeper</title>
+      <link>http://localhost:1313/Aozaki-Touko/tags/zookeeper/</link>
+      <pubDate>Sun, 31 May 2026 23:59:40 +0800</pubDate>
+      <guid>http://localhost:1313/Aozaki-Touko/tags/zookeeper/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>RocketMQ</title>
+      <link>http://localhost:1313/Aozaki-Touko/tags/rocketmq/</link>
+      <pubDate>Sun, 31 May 2026 23:57:25 +0800</pubDate>
+      <guid>http://localhost:1313/Aozaki-Touko/tags/rocketmq/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Redis</title>
+      <link>http://localhost:1313/Aozaki-Touko/tags/redis/</link>
+      <pubDate>Sun, 31 May 2026 23:52:44 +0800</pubDate>
+      <guid>http://localhost:1313/Aozaki-Touko/tags/redis/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Netty</title>
+      <link>http://localhost:1313/Aozaki-Touko/tags/netty/</link>
+      <pubDate>Sun, 31 May 2026 23:24:27 +0800</pubDate>
+      <guid>http://localhost:1313/Aozaki-Touko/tags/netty/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Maven</title>
+      <link>http://localhost:1313/Aozaki-Touko/tags/maven/</link>
+      <pubDate>Sun, 31 May 2026 23:18:58 +0800</pubDate>
+      <guid>http://localhost:1313/Aozaki-Touko/tags/maven/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Mybatis</title>
       <link>http://localhost:1313/Aozaki-Touko/tags/mybatis/</link>
@@ -23,10 +65,10 @@
       <description></description>
     </item>
     <item>
-      <title>CS</title>
-      <link>http://localhost:1313/Aozaki-Touko/tags/cs/</link>
+      <title>算法</title>
+      <link>http://localhost:1313/Aozaki-Touko/tags/%E7%AE%97%E6%B3%95/</link>
       <pubDate>Tue, 20 Jan 2026 15:15:32 +0800</pubDate>
-      <guid>http://localhost:1313/Aozaki-Touko/tags/cs/</guid>
+      <guid>http://localhost:1313/Aozaki-Touko/tags/%E7%AE%97%E6%B3%95/</guid>
       <description></description>
     </item>
     <item>
@@ -37,10 +79,10 @@
       <description></description>
     </item>
     <item>
-      <title>CSAPP</title>
-      <link>http://localhost:1313/Aozaki-Touko/tags/csapp/</link>
+      <title>CS课程</title>
+      <link>http://localhost:1313/Aozaki-Touko/tags/cs%E8%AF%BE%E7%A8%8B/</link>
       <pubDate>Sun, 10 Aug 2025 18:37:42 +0800</pubDate>
-      <guid>http://localhost:1313/Aozaki-Touko/tags/csapp/</guid>
+      <guid>http://localhost:1313/Aozaki-Touko/tags/cs%E8%AF%BE%E7%A8%8B/</guid>
       <description></description>
     </item>
   </channel>

@@ -1,0 +1,73 @@
+{{- define "main" }}
+
+{{- $pages := site.RegularPages }}
+{{- if site.Params.mainSections }}
+{{- $pages = where site.RegularPages "Type" "in" site.Params.mainSections }}
+{{- end }}
+{{- $pages = where $pages "Params.hidden" "!=" true }}
+
+<main class="archive-page">
+    <header class="archive-header">
+        <h1 class="archive-title">
+            {{ .Title | default "Archives" }}
+        </h1>
+
+        {{- with .Description }}
+        <p class="archive-description">
+            {{ . }}
+        </p>
+        {{- else }}
+        <p class="archive-description">
+            共 {{ len $pages }} 篇文章，按年份和月份归档。
+        </p>
+        {{- end }}
+    </header>
+
+    <section class="archive-groups" aria-label="Archives">
+        {{- range $pages.GroupByDate "2006" }}
+        <details class="archive-year" open>
+            <summary class="archive-year-summary">
+                <span class="archive-year-name">{{ .Key }}</span>
+                <span class="archive-year-count">{{ len .Pages }} 篇</span>
+            </summary>
+
+            <div class="archive-months">
+                {{- range .Pages.GroupByDate "01" }}
+                <section class="archive-month">
+                    <div class="archive-month-label">
+                        <span class="archive-month-name">{{ .Key }}月</span>
+                        <span class="archive-month-count">{{ len .Pages }}</span>
+                    </div>
+
+                    <ol class="archive-posts">
+                        {{- range .Pages }}
+                        <li class="archive-post">
+                            <a class="archive-post-link" href="{{ .RelPermalink }}">
+                                <time class="archive-post-date" datetime="{{ .Date.Format " 2006-01-02" }}">
+                                    {{ .Date.Format "01-02" }}
+                                </time>
+
+                                <span class="archive-post-body">
+                                    <span class="archive-post-title">
+                                        {{ .Title }}
+                                    </span>
+
+                                    {{- with .Description }}
+                                    <span class="archive-post-description">
+                                        {{ . }}
+                                    </span>
+                                    {{- end }}
+                                </span>
+                            </a>
+                        </li>
+                        {{- end }}
+                    </ol>
+                </section>
+                {{- end }}
+            </div>
+        </details>
+        {{- end }}
+    </section>
+</main>
+
+{{- end }}

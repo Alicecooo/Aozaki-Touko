@@ -2,6 +2,8 @@ baseURL: https://alicecooo.github.io/Aozaki-Touko/
 languageCode: en-us
 title: Aozaki Touko
 theme: ["PaperMod"]
+pagination:
+  pagerSize: 5
 
 # SEO & 构建控制
 enableRobotsTXT: true
@@ -16,8 +18,8 @@ minify:
 
 markup:
   goldmark:
-  renderer:
-    unsafe: true
+    renderer:
+      unsafe: true
 
 # 核心参数（精简版）
 params:
@@ -58,7 +60,7 @@ params:
     hiddenInSingle: true
 
   showtoc: true # 显示目录
-  tocopen: false # 自动展开目录
+  tocopen: true # 自动展开目录
 
 home:
   sortBy: "date"
@@ -85,4 +87,3 @@ menu:
 
 # 代码高亮（保留核心）
 pygmentsUseClasses: true
-

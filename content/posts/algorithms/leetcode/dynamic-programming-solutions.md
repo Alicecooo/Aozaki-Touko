@@ -4,7 +4,6 @@ tab_title: "Dynamic Programming Solutions"
 date: "2026-11-10T00:41:53+08:00"
 draft: false
 topics: ["algorithms"]
-series: ["LeetCode"]
 tags: ["动态规划"]
 summary: "从爬楼梯、背包到子序列问题的状态设计和转移。"
 ---

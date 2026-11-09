@@ -4,7 +4,6 @@ tab_title: "Binary Tree Solutions"
 date: "2026-11-10T00:41:54+08:00"
 draft: false
 topics: ["algorithms"]
-series: ["LeetCode"]
 tags: ["二叉树", "递归"]
 summary: "二叉树遍历、搜索树、路径与构造问题的题解。"
 ---

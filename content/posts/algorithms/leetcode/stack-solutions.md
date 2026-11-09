@@ -4,7 +4,6 @@ tab_title: "Stack Solutions"
 date: "2026-11-10T00:41:40+08:00"
 draft: false
 topics: ["algorithms"]
-series: ["LeetCode"]
 tags: ["栈", "单调栈"]
 summary: "括号、表达式、单调栈与栈队列转换的题解。"
 ---

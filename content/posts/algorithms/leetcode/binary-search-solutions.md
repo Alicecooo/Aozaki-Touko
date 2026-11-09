@@ -4,7 +4,6 @@ tab_title: "Binary Search Solutions"
 date: "2026-11-10T00:41:55+08:00"
 draft: false
 topics: ["algorithms"]
-series: ["LeetCode"]
 tags: ["二分查找"]
 summary: "二分边界、旋转数组、矩阵查找与中位数等题目的思路和实现。"
 ---

@@ -4,7 +4,6 @@ tab_title: "Simulation Solutions"
 date: "2026-11-10T00:41:39+08:00"
 draft: false
 topics: ["algorithms"]
-series: ["LeetCode"]
 tags: ["模拟"]
 summary: "按题目规则维护状态，处理方向、坐标与边界。"
 ---

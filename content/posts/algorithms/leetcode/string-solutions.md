@@ -4,7 +4,6 @@ tab_title: "String Solutions"
 date: "2026-11-10T00:41:45+08:00"
 draft: false
 topics: ["algorithms"]
-series: ["LeetCode"]
 tags: ["字符串"]
 summary: "字符串转换、匹配、模拟运算与格式处理的题解。"
 ---

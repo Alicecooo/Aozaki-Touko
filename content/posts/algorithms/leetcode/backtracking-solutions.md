@@ -4,7 +4,6 @@ tab_title: "Backtracking Solutions"
 date: "2026-11-10T00:41:50+08:00"
 draft: false
 topics: ["algorithms"]
-series: ["LeetCode"]
 tags: ["回溯"]
 summary: "排列、组合、子集、棋盘与搜索问题的回溯过程。"
 ---

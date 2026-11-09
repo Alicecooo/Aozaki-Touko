@@ -4,7 +4,6 @@ tab_title: "Substring Solutions"
 date: "2026-11-10T00:41:46+08:00"
 draft: false
 topics: ["algorithms"]
-series: ["LeetCode"]
 tags: ["字符串", "前缀和"]
 summary: "前缀和、单调队列、覆盖子串与字符串匹配问题。"
 ---

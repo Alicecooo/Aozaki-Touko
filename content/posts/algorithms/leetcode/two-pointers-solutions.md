@@ -4,7 +4,6 @@ tab_title: "Two Pointers Solutions"
 date: "2026-11-10T00:41:52+08:00"
 draft: false
 topics: ["algorithms"]
-series: ["LeetCode"]
 tags: ["双指针"]
 summary: "数组与字符串中相向、同向指针的常见题型。"
 ---

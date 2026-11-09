@@ -15,7 +15,6 @@ taxonomies:
   category: categories
   tag: tags
   topic: topics
-  series: series
 
 outputs:
   home: [HTML, RSS, JSON]

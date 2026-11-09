@@ -4,7 +4,6 @@ tab_title: "Heap Solutions"
 date: "2026-11-10T00:41:48+08:00"
 draft: false
 topics: ["algorithms"]
-series: ["LeetCode"]
 tags: ["堆", "优先队列"]
 summary: "第 K 大元素、高频元素与数据流中位数。"
 ---

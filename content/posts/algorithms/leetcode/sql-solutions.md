@@ -4,7 +4,6 @@ tab_title: "SQL Solutions"
 date: "2026-11-10T00:41:42+08:00"
 draft: false
 topics: ["algorithms"]
-series: ["LeetCode"]
 tags: ["SQL"]
 summary: "连接、聚合、排序与窗口函数的数据库练习。"
 ---

@@ -4,7 +4,6 @@ tab_title: "Algorithm Techniques"
 date: "2026-11-10T00:41:44+08:00"
 draft: false
 topics: ["algorithms"]
-series: ["LeetCode"]
 tags: ["位运算", "数组"]
 summary: "异或、投票、原地交换、排列与环检测等解题技巧。"
 ---

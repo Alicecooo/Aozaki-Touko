@@ -4,7 +4,6 @@ tab_title: "Greedy Solutions"
 date: "2026-11-10T00:41:36+08:00"
 draft: false
 topics: ["algorithms"]
-series: ["LeetCode"]
 tags: ["贪心"]
 summary: "股票、跳跃、区间划分与删列问题的贪心思路。"
 ---

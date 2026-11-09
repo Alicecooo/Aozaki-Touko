@@ -4,7 +4,6 @@ tab_title: "Hash Table Solutions"
 date: "2026-11-10T00:41:51+08:00"
 draft: false
 topics: ["algorithms"]
-series: ["LeetCode"]
 tags: ["哈希表"]
 summary: "两数之和、异位词、连续序列与重复元素的哈希解法。"
 ---

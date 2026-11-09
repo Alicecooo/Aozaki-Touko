@@ -4,7 +4,6 @@ tab_title: "Matrix Solutions"
 date: "2026-11-10T00:41:37+08:00"
 draft: false
 topics: ["algorithms"]
-series: ["LeetCode"]
 tags: ["矩阵"]
 summary: "矩阵置零、旋转、螺旋遍历、数独与网格问题。"
 ---

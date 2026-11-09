@@ -4,7 +4,6 @@ tab_title: "Math Solutions"
 date: "2026-11-10T00:41:43+08:00"
 draft: false
 topics: ["algorithms"]
-series: ["LeetCode"]
 tags: ["数学"]
 summary: "整数反转、回文数、除法与随机数生成问题。"
 ---

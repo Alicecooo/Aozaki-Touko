@@ -4,7 +4,6 @@ tab_title: "Multidimensional DP Solutions"
 date: "2026-11-10T00:41:47+08:00"
 draft: false
 topics: ["algorithms"]
-series: ["LeetCode"]
 tags: ["动态规划"]
 summary: "网格路径、公共子序列、编辑距离与模式匹配的动态规划。"
 ---

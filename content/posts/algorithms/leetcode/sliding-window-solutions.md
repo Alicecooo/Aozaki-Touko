@@ -1,10 +1,10 @@
 ---
 title: "滑动窗口题解"
+aliases: ["/posts/算法滑动窗口/"]
 tab_title: "Sliding Window Solutions"
 date: "2026-11-10T00:41:38+08:00"
 draft: false
 topics: ["algorithms"]
-series: ["LeetCode"]
 tags: ["滑动窗口"]
 summary: "定长与变长窗口的写法，以及字符串窗口题的实现。"
 ---

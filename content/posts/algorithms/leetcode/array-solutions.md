@@ -4,7 +4,6 @@ tab_title: "Array Solutions"
 date: "2026-11-10T00:41:41+08:00"
 draft: false
 topics: ["algorithms"]
-series: ["LeetCode"]
 tags: ["数组"]
 summary: "区间、子数组、轮转、原地处理与数组构造问题。"
 ---

@@ -4,7 +4,6 @@ tab_title: "Graph Solutions"
 date: "2026-11-10T00:41:49+08:00"
 draft: false
 topics: ["algorithms"]
-series: ["LeetCode"]
 tags: ["图论", "搜索"]
 summary: "岛屿、网格搜索、拓扑排序与前缀树的题解。"
 ---

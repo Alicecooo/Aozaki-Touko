@@ -4,7 +4,6 @@ tab_title: "Linked List Solutions"
 date: "2026-11-10T00:41:35+08:00"
 draft: false
 topics: ["algorithms"]
-series: ["LeetCode"]
 tags: ["链表"]
 summary: "反转、合并、环检测、排序与指针重连的常见题型。"
 ---

@@ -1,0 +1,26 @@
+{{ with site.Params.music }}{{ if .enabled }}
+{{ $tracks := slice }}{{ $ids := slice }}
+{{ range site.Data.music.tracks }}
+  {{ if or (not .id) (in $ids .id) }}{{ errorf "music.yaml: 曲目 id 缺失或重复: %s" .id }}{{ end }}
+  {{ if or (not .title) (not .src) }}{{ errorf "music.yaml: 曲目必须填写 title 和 src: %s" .id }}{{ end }}
+  {{ if not (findRE `^https?://` .src) }}{{ if not (fileExists (printf "static/%s" .src)) }}{{ errorf "music.yaml: 音频不存在: %s" .src }}{{ end }}{{ end }}
+  {{ $ids = $ids | append .id }}
+  {{ $tracks = $tracks | append (dict "id" .id "title" .title "subtitle" (.subtitle | default "") "src" (.src | relURL)) }}
+{{ end }}
+{{ if not $tracks }}{{ errorf "music.yaml: 至少需要一首音乐" }}{{ end }}
+<aside id="kb-music-dock" class="kb-music-dock" aria-label="背景音乐播放器">
+  <div id="kb-music-panel" class="kb-music-panel kb-popover" hidden>
+    <label class="kb-volume-label">音量<input id="kb-music-volume" type="range" min="0" max="100" step="1" value="25" aria-label="背景音乐音量"></label>
+  </div>
+  <div class="kb-music-bar">
+    <button id="kb-music-play" class="kb-music-disc" type="button" aria-label="播放背景音乐"><svg class="kb-play-symbol" width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="m5 3 8 5-8 5z"/></svg><svg class="kb-pause-symbol" width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 3h3v10H4zm5 0h3v10H9z"/></svg></button>
+    <div id="kb-music-details" class="kb-music-details">
+      <div class="kb-music-label"><strong id="kb-current-track"></strong><span id="kb-music-status" role="status">准备播放</span></div>
+      <button id="kb-music-prev" class="kb-music-skip" type="button" aria-label="上一首" {{ if lt (len $tracks) 2 }}disabled title="当前只有一首音乐"{{ end }}><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M3 3h2v10H3zm9 0v10L5 8z"/></svg></button>
+      <button id="kb-music-next" class="kb-music-skip" type="button" aria-label="下一首" {{ if lt (len $tracks) 2 }}disabled title="当前只有一首音乐"{{ end }}><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M11 3h2v10h-2zM4 3l7 5-7 5z"/></svg></button>
+      <button id="kb-music-toggle" type="button" aria-label="音量设置" aria-expanded="false" aria-controls="kb-music-panel"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="2" fill="var(--entry)"/><circle cx="15" cy="17" r="2" fill="var(--entry)"/></svg></button>
+    </div>
+  </div>
+  <audio id="kb-audio" preload="metadata" data-autoplay="{{ .autoplay }}" data-tracks="{{ $tracks | jsonify }}" data-volume="{{ .volume | default 0.25 }}"></audio>
+</aside>
+{{ end }}{{ end }}

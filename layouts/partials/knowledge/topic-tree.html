@@ -1,0 +1,24 @@
+{{ $topic := . }}
+{{ $pages := intersect .RegularPages (partialCached "knowledge/pages.html" site) }}
+{{ if $pages }}
+<details class="kb-tree-root" open>
+  <summary><span>{{ .Title }}</span><span class="kb-tree-count">{{ len $pages }}</span></summary>
+  <div class="kb-tree-children">
+    {{ $tagged := slice }}
+    {{ range site.Taxonomies.tags.Alphabetical }}
+      {{ $tag := .Page }}
+      {{ $tagPages := intersect $tag.RegularPages $pages }}
+      {{ if $tagPages }}
+      {{ $tagged = $tagged | collections.Union $tagPages }}
+      <details class="kb-tree-branch">
+        <summary><span>{{ index site.Data.knowledge.tag_labels $tag.Title | default $tag.Title }}</span><span class="kb-tree-count">{{ len $tagPages }}</span></summary>
+        <ul class="kb-tree-leaves">{{ range first 8 $tagPages.ByLastmod.Reverse }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
+        {{ if gt (len $tagPages) 8 }}<li><a class="kb-tree-more" href="{{ $topic.RelPermalink }}">更多 →</a></li>{{ end }}</ul>
+      </details>
+      {{ end }}
+    {{ end }}
+    {{ $untagged := $pages | complement $tagged }}
+    {{ with $untagged }}<ul class="kb-tree-leaves">{{ range first 8 .ByLastmod.Reverse }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}{{ if gt (len .) 8 }}<li><a class="kb-tree-more" href="{{ $topic.RelPermalink }}">更多 →</a></li>{{ end }}</ul>{{ end }}
+  </div>
+</details>
+{{ end }}

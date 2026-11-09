@@ -1,9 +1,36 @@
 baseURL: https://alicecooo.github.io/Aozaki-Touko/
-languageCode: en-us
+languageCode: zh-cn
+defaultContentLanguage: zh
 title: Aozaki Touko
 theme: ["PaperMod"]
 pagination:
-  pagerSize: 5
+  pagerSize: 12
+
+# Keep article URLs independent of the Markdown topic folders.
+permalinks:
+  page:
+    posts: /posts/:slugorcontentbasename/
+
+taxonomies:
+  category: categories
+  tag: tags
+  topic: topics
+  series: series
+
+outputs:
+  home: [HTML, RSS, JSON]
+
+related:
+  includeNewer: true
+  threshold: 30
+  toLower: true
+  indices:
+    - name: topics
+      weight: 80
+    - name: tags
+      weight: 50
+    - name: series
+      weight: 60
 
 # SEO & 构建控制
 enableRobotsTXT: true
@@ -17,6 +44,9 @@ minify:
   minifyOutput: true
 
 markup:
+  tableOfContents:
+    startLevel: 1
+    endLevel: 4
   goldmark:
     renderer:
       unsafe: true
@@ -25,11 +55,21 @@ markup:
 params:
   env: production
   title: Aozaki Touko
-  description: "欢迎回来"
+  description: "早安、晚安、谢谢、再见！"
+  mainSections: [posts, notes]
   keywords: [Blog, Portfolio, PaperMod]
   author: Alicecooo
   defaultTheme: auto
   disableThemeToggle: true
+  assets:
+    favicon: favicon.svg
+  homeEffects: true
+  homeIdleSeconds: 30
+  articleBackground: plain
+  music:
+    enabled: true
+    autoplay: true
+    volume: 0.25
 
   # 界面展示
   ShowReadingTime: true
@@ -47,11 +87,6 @@ params:
     Content: 早安、晚安、谢谢、再见！
     ImageUrl: /images/Ava.png
     enableList: true
-
-  # 社交图标（保留核心）
-  socialIcons:
-    - name: github
-      url: "https://github.com/Alicecooo"
 
   # 封面控制
   cover:
@@ -72,18 +107,18 @@ menu:
       name: Home
       url: /
       weight: 10
-    - identifier: archives
-      name: Archives
-      url: /archives/
+    - identifier: topics
+      name: Topics
+      url: /topics/
       weight: 20
-    - identifier: tags
-      name: Tag
-      url: /tags/
-      weight: 30
-    - identifier: About
-      name: About
-      url: /About/
+    - identifier: notes
+      name: Notes
+      url: /notes/
       weight: 40
+    - identifier: archives
+      name: Archive
+      url: /archives/
+      weight: 50
 
 # 代码高亮（保留核心）
 pygmentsUseClasses: true

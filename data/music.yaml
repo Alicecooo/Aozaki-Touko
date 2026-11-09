@@ -1,0 +1,9 @@
+# 新增歌曲：将音频放入 static/audio/，在 tracks 下新增一项即可。
+tracks:
+  - id: before-i-become-you
+    title: 在我变成你之前
+    subtitle: 纸房子 ED 版
+    src: audio/before-i-become-you.m4a
+  - id: what-can-i-keep-you-with
+    title: 我用什么把你留住
+    src: audio/what-can-i-keep-you-with.m4a

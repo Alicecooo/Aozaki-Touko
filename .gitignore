@@ -1,0 +1,16 @@
+# ---------- Hugo ----------
+# 构建产物：由 GitHub Actions（或本地 hugo）生成，不入库
+/public/
+
+# Hugo 资源缓存与构建锁（本地生成，随构建变化）
+/resources/_gen/
+/.hugo_build.lock
+
+# ---------- 系统 / 编辑器 ----------
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.log
+
+# Local build verification artifacts
+/tests/fixtures/runs/

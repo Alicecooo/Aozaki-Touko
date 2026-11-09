@@ -1,5 +1,5 @@
 ---
-title: About        
+title: 关于
 type: page           
 permalink: /about/    
 layout: single      

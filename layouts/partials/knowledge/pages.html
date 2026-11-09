@@ -1,0 +1,2 @@
+{{- $pages := where site.RegularPages "Section" "in" site.Params.mainSections -}}
+{{- return (where $pages "Params.hidden" "ne" true) -}}

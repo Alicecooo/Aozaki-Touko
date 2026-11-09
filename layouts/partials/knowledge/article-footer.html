@@ -1,0 +1,4 @@
+{{ if in site.Params.mainSections .Section }}
+{{ with first 3 ((partialCached "knowledge/pages.html" site).Related .) }}<section class="kb-related"><h2>相关文章</h2>{{ range . }}{{ partial "knowledge/row.html" . }}{{ end }}</section>{{ end }}
+<div class="kb-chips kb-return">{{ range .GetTerms "topics" }}<a href="{{ .RelPermalink }}">返回{{ .Title }} →</a>{{ end }}</div>
+{{ end }}

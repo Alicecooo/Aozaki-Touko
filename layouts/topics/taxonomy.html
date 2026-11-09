@@ -1,0 +1,6 @@
+{{ define "main" }}
+<div class="kb-directory">
+  <header class="kb-page-header"><h1>主题</h1></header>
+  <div class="kb-tree">{{ range .Data.Terms.Alphabetical }}{{ partial "knowledge/topic-tree.html" .Page }}{{ end }}</div>
+</div>
+{{ end }}

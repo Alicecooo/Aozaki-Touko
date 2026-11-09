@@ -1,0 +1,7 @@
+{{ define "main" }}
+{{ $pages := where (partialCached "knowledge/pages.html" site) "Section" "notes" }}
+{{ $pager := .Paginate $pages.ByLastmod.Reverse }}
+<header class="kb-page-header"><h1>笔记</h1></header>
+{{ range $pager.Pages }}{{ partial "knowledge/row.html" . }}{{ else }}<p class="kb-empty">暂无笔记。</p>{{ end }}
+{{ partial "knowledge/pagination.html" $pager }}
+{{ end }}

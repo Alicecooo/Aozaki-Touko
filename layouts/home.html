@@ -1,0 +1,12 @@
+{{ define "main" }}
+{{ partialCached "knowledge/validate.html" site }}
+{{ $pages := partialCached "knowledge/pages.html" site }}
+<div class="kb-home" {{ if site.Params.homeEffects }}data-home-effects{{ end }}>
+  {{ partial "home_info.html" . }}
+  <section class="kb-section" aria-labelledby="recent-heading">
+    <div class="kb-home-section-heading"><h2 id="recent-heading">最近更新</h2></div>
+    <div class="kb-home-posts">{{ range first 3 $pages.ByLastmod.Reverse }}{{ partial "knowledge/home-post.html" . }}{{ end }}</div>
+    {{ if gt (len $pages) 3 }}<a class="kb-home-more" href="{{ "archives/" | relURL }}" aria-label="查看更早的文章" title="查看更早的文章">…</a>{{ end }}
+  </section>
+</div>
+{{ end }}

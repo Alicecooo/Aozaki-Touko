@@ -1,0 +1,14 @@
+{{ define "main" }}
+<header class="kb-page-header"><h1>搜索</h1></header>
+<div id="kb-search" data-index="{{ "index.json" | relURL }}">
+  <form id="kb-search-form" role="search">
+    <label class="kb-sr-only" for="kb-query">搜索文章</label>
+    <div class="kb-search-entry"><input id="kb-query" name="q" type="search" placeholder="搜索文章" autocomplete="off"><button type="submit" aria-label="搜索"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.5 4.5"/></svg></button></div>
+  </form>
+  <p id="kb-search-status" class="kb-muted" role="status" aria-live="polite" hidden></p>
+  <div id="kb-search-results" aria-busy="false"></div>
+  <nav id="kb-search-pagination" class="kb-pagination" aria-label="搜索结果分页"></nav>
+</div>
+{{ $script := resources.Get "js/knowledge-search.js" | resources.Minify | fingerprint }}
+<script defer src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}"></script>
+{{ end }}

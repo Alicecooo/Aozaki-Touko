@@ -73,6 +73,3 @@ jobs:
       - name: 部署到GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-            submodules: recursive  # 必须是 recursive，拉取子模块
-            fetch-depth: 0

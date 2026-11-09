@@ -1,0 +1,5 @@
+<article class="kb-row">
+  <div><h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+  {{ with (.Description | default (.Params.summary | plainify)) }}<p>{{ . | truncate 110 }}</p>{{ end }}</div>
+  <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod.Format "2006-01-02" }}</time>
+</article>

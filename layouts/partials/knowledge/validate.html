@@ -1,0 +1,5 @@
+{{- $pages := partialCached "knowledge/pages.html" site -}}
+{{- range $pages -}}
+  {{- if not .Params.topics -}}{{- errorf "%s: 必须填写 topics" .File.Path -}}{{- end -}}
+  {{- if gt .Date .Lastmod -}}{{- errorf "%s: lastmod 不能早于 date" .File.Path -}}{{- end -}}
+{{- end -}}

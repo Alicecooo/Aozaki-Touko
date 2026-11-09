@@ -1,0 +1,131 @@
+:root {
+  --main-width: 760px;
+  --nav-width: 760px;
+  --kb-accent: var(--primary);
+  --kb-gutter: clamp(20px, 4vw, 32px);
+}
+/* The navigation and every browsing page share the same two content edges. */
+.kb-header .nav {
+  max-width: calc(var(--main-width) + 64px);
+  min-height: 84px;
+  padding-inline: var(--kb-gutter);
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 24px;
+  line-height: 1.5;
+}
+.kb-header .logo, .kb-header #menu { margin: 0; }
+.kb-header .logo { flex: 0 0 auto; }
+.kb-header .logo a { font-size: 23px; font-weight: 650; letter-spacing: -.03em; }
+.kb-nav-links { display: flex; align-items: center; gap: 24px; }
+.kb-header #menu { gap: 22px; overflow: visible; }
+.kb-header #menu li + li { margin: 0; }
+.kb-header #menu a { font-size: 14px; color: var(--secondary); padding-block: 8px; }
+.kb-header #menu .active { font-size: inherit; border-bottom-width: 1px; color: var(--primary); padding-bottom: 4px; }
+.kb-search-link { display: flex !important; align-items: center; padding: 8px 0 8px 4px; color: var(--secondary); }
+.kb-search-link:hover { color: var(--primary); }
+body.list .main { max-width: calc(var(--main-width) + 64px); padding-inline: var(--kb-gutter); }
+.kb-home, .kb-directory, #kb-search { line-height: 1.7; }
+/* Keep the original avatar and PaperMod article entries. */
+.kb-home .first-entry { min-height: 0; margin: 38px 0 52px; }
+.kb-home .home-info-content-wrapper { flex-direction: row; align-items: center; gap: 28px; }
+.kb-home .home-info-avatar-container { width: 96px; height: 96px; }
+.kb-home .home-info-avatar-container::after { display: none; }
+.kb-home .home-info-text-content { margin: 0; }
+.kb-home .entry-header h1 { font-size: 31px; line-height: 1.4; letter-spacing: -.03em; }
+.kb-home .first-entry .entry-content { margin: 8px 0 0; font-size: 15px; }
+.kb-home .kb-section { margin: 0 0 40px; }
+.kb-section > h2 { font-size: 18px; font-weight: 500; margin-bottom: 22px; }
+.kb-row { display: flex; align-items: baseline; justify-content: space-between; gap: 24px; padding: 16px 0; }
+.kb-row > div { min-width: 0; }
+.kb-row h3, #kb-search-results h2 { font-size: 17px; line-height: 1.6; font-weight: 500; margin: 0; }
+.kb-row p { color: var(--secondary); font-size: 14px; line-height: 1.75; margin-top: 5px; overflow-wrap: anywhere; }
+.kb-row > time { font-size: 12px; color: var(--secondary); white-space: nowrap; }
+.kb-home .kb-home-post { display: block; padding: 24px 28px; margin-bottom: 20px; }
+.kb-home-post .entry-header h3 { font-size: 21px; font-weight: 600; line-height: 1.5; }
+.kb-home-post .entry-content { margin: 9px 0 13px; }
+.kb-home-post .entry-content p { margin: 0; font-size: 14px; }
+.kb-home-post .entry-footer { font-size: 12px; }
+.kb-row a:hover, .kb-tree a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.kb-page-header { padding: 34px 0 32px; }
+.kb-page-header h1 { font-size: 30px; line-height: 1.4; font-weight: 650; letter-spacing: -.03em; margin: 0; }
+.kb-back { display: inline-block; color: var(--secondary); font-size: 13px; margin-bottom: 16px; }
+.kb-directory { padding: 0 0 40px; }
+/* Explorer rows: one quiet vertical guide per expanded level, no horizontal rules. */
+.kb-tree { margin-top: 0; }
+.kb-tree details > summary { display: flex; align-items: center; gap: 8px; cursor: pointer; list-style: none; padding: 8px 0; line-height: 1.65; }
+.kb-tree summary::-webkit-details-marker { display: none; }
+.kb-tree summary::before { content: "▸"; width: 16px; flex: 0 0 16px; font-size: 12px; color: var(--secondary); }
+.kb-tree details[open] > summary::before { content: "▾"; }
+.kb-tree-root { margin-bottom: 20px; }
+.kb-tree-root > summary { font-size: 19px; font-weight: 550; }
+.kb-tree-children { margin: 2px 0 8px 7px; padding-left: 24px; border-left: 1px solid var(--border); }
+.kb-tree-branch > summary { font-size: 15px; font-weight: 400; }
+.kb-tree-count { margin-left: auto; color: var(--secondary); font-size: 12px; font-weight: 400; padding-left: 14px; }
+.kb-tree-branch .kb-tree-count { display: none; }
+.kb-tree-leaves { list-style: none; margin-left: 7px; padding-left: 24px; border-left: 1px solid var(--border); }
+.kb-tree-leaves li { padding: 7px 0; line-height: 1.7; font-size: 14px; overflow-wrap: anywhere; }
+.kb-tree-more { display: inline-block; color: var(--secondary); font-size: 12px; padding-block: 5px; }
+/* Archive uses the same content width and heading inset as Topics and Home. */
+.main .archive-page { max-width: none; margin: 0; padding: 34px 0 40px; }
+.archive-page .archive-header { margin-bottom: 30px; }
+.main .archive-page .archive-title { font-size: 30px; font-weight: 650; letter-spacing: -.03em; line-height: 1.4; }
+.archive-page .archive-groups { display: block; }
+.archive-page .archive-year, .archive-page .archive-year:last-child { border: 0; margin: 0 0 28px; }
+.archive-page .archive-year-summary { display: flex; align-items: baseline; gap: 10px; padding: 10px 0 14px; }
+.archive-page .archive-year-summary::before { width: 14px; font-size: 14px; }
+.archive-page .archive-year-name { font-size: 22px; font-weight: 550; }
+.archive-page .archive-year-count { margin-left: auto; font-size: 12px; }
+.archive-page .archive-months { padding: 0; }
+.archive-page .archive-month { grid-template-columns: 64px minmax(0, 1fr); gap: 24px; border: 0; padding: 10px 0 18px; }
+.archive-page .archive-month:first-child { padding-top: 6px; }
+.archive-page .archive-month-label { padding-top: 8px; }
+.archive-page .archive-month-name { font-size: 13px; font-weight: 400; color: var(--secondary); }
+.archive-page .archive-post { border: 0; }
+.archive-page .archive-post-link { grid-template-columns: 48px minmax(0, 1fr); padding: 7px 0; gap: 18px; }
+.archive-page .archive-post-date { font-size: 12px; }
+.archive-page .archive-post-title { font-size: 15px; font-weight: 400; }
+.archive-page .archive-post-description { display: none; }
+.kb-pagination { display: flex; align-items: center; justify-content: center; gap: 22px; margin: 28px 0; font-size: 13px; }
+.kb-pagination:empty { display: none; }
+.kb-pagination a, .kb-pagination button { color: var(--primary); padding: 8px; }
+.kb-muted { color: var(--secondary); font-size: 13px; }
+.kb-chips { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; color: var(--secondary); }
+.kb-article-context { margin: 14px 0; }
+.kb-article-context p { margin-top: 8px; }
+.kb-related > h2 { font-size: 19px; margin: 28px 0 10px; }
+.kb-return { margin: 24px 0; }
+.kb-empty { padding: 16px 0; color: var(--secondary); font-size: 14px; }
+.kb-search-entry { display: flex; align-items: center; gap: 12px; border: 1px solid var(--tertiary); border-radius: 7px; padding: 8px 14px; background: var(--entry); }
+.kb-search-entry input { flex: 1; min-width: 0; font-size: 16px; background: transparent; padding: 6px 0; }
+.kb-search-entry button { display: flex; align-items: center; padding: 8px 0 8px 8px; color: var(--secondary); }
+#kb-search-status { margin: 26px 0 2px; }
+.kb-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+:where(a, button, input, select, summary):focus-visible { outline: 2px solid var(--secondary); outline-offset: 4px; }
+.post-single > .toc { margin: 24px 0; }
+.post-single > .toc .inner { max-height: 320px; overflow-y: auto; }
+@media (max-width: 620px) {
+  :root { --gap: 20px; }
+  .kb-header .nav { flex-wrap: wrap; gap: 0; padding-top: 20px; padding-bottom: 8px; }
+  .kb-header .logo { width: 100%; margin-bottom: 13px; }
+  .kb-header .logo a { font-size: 23px; }
+  .kb-nav-links { width: 100%; justify-content: space-between; gap: 16px; }
+  .kb-header #menu { gap: 25px; }
+  .kb-header #menu a { font-size: 13px; }
+  .kb-home .first-entry { margin: 24px 0 38px; }
+  .kb-home .home-info-content-wrapper { gap: 22px; }
+  .kb-home .home-info-avatar-container { width: 80px; height: 80px; }
+  .kb-home .entry-header h1 { font-size: 27px; }
+  .kb-home .first-entry .entry-content { font-size: 13px; line-height: 1.8; }
+  .kb-home .kb-home-post { padding: 20px; }
+  .kb-home-post .entry-header h3 { font-size: 19px; }
+  .kb-page-header, .main .archive-page { padding-top: 22px; }
+  .kb-page-header h1, .main .archive-page .archive-title { font-size: 28px; }
+  .archive-page .archive-month { grid-template-columns: 42px minmax(0, 1fr); gap: 14px; }
+  .archive-page .archive-month-label { display: block; }
+  .archive-page .archive-post-link { grid-template-columns: 42px minmax(0, 1fr); gap: 12px; }
+  .archive-page .archive-post-title { font-size: 14px; }
+  .kb-tree-children, .kb-tree-leaves { padding-left: 19px; }
+  .kb-row { gap: 12px; }
+  .kb-row > time { font-size: 10px; }
+}

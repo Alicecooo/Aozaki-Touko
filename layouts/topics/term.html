@@ -1,0 +1,7 @@
+{{ define "main" }}
+{{ $pages := intersect .RegularPages (partialCached "knowledge/pages.html" site) }}
+{{ $pager := .Paginate $pages.ByLastmod.Reverse }}
+<header class="kb-page-header"><a class="kb-back" href="{{ "topics/" | relURL }}">← 主题</a><h1>{{ .Title }}</h1></header>
+<section id="all-content">{{ range $pager.Pages }}{{ partial "knowledge/row.html" . }}{{ end }}</section>
+{{ partial "knowledge/pagination.html" $pager }}
+{{ end }}

@@ -1,0 +1,7 @@
+{{- $items := slice -}}
+{{- range (partialCached "knowledge/pages.html" site).ByLastmod.Reverse -}}
+  {{- $topics := slice -}}
+  {{- range .GetTerms "topics" -}}{{- $topics = $topics | append (dict "id" .Data.Term "title" .Title) -}}{{- end -}}
+  {{- $items = $items | append (dict "title" .Title "url" .RelPermalink "summary" (.Description | default (.Summary | plainify) | truncate 180) "content" (.Plain | htmlUnescape) "topics" $topics "tags" (.Params.tags | default slice) "date" (.Date.Format "2006-01-02") "updated" (.Lastmod.Format "2006-01-02")) -}}
+{{- end -}}
+{{- dict "items" $items | jsonify -}}

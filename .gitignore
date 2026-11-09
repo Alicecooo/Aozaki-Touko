@@ -12,5 +12,3 @@ Thumbs.db
 Desktop.ini
 *.log
 
-# Local build verification artifacts
-/tests/fixtures/runs/

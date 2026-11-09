@@ -93,8 +93,6 @@ body.list .main { max-width: calc(var(--main-width) + 64px); padding-inline: var
 .kb-chips { display: flex; flex-wrap: wrap; gap: 12px; font-size: 12px; color: var(--secondary); }
 .kb-article-context { margin: 14px 0; }
 .kb-article-context p { margin-top: 8px; }
-.kb-related > h2 { font-size: 19px; margin: 28px 0 10px; }
-.kb-return { margin: 24px 0; }
 .kb-empty { padding: 16px 0; color: var(--secondary); font-size: 14px; }
 .kb-search-entry { display: flex; align-items: center; gap: 12px; border: 1px solid var(--tertiary); border-radius: 7px; padding: 8px 14px; background: var(--entry); }
 .kb-search-entry input { flex: 1; min-width: 0; font-size: 16px; background: transparent; padding: 6px 0; }

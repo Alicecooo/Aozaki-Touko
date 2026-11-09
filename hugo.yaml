@@ -20,18 +20,6 @@ taxonomies:
 outputs:
   home: [HTML, RSS, JSON]
 
-related:
-  includeNewer: true
-  threshold: 30
-  toLower: true
-  indices:
-    - name: topics
-      weight: 80
-    - name: tags
-      weight: 50
-    - name: series
-      weight: 60
-
 # SEO & 构建控制
 enableRobotsTXT: true
 buildDrafts: false
@@ -74,7 +62,7 @@ params:
   # 界面展示
   ShowReadingTime: true
   ShowShareButtons: false
-  ShowPostNavLinks: true
+  ShowPostNavLinks: false
   ShowBreadCrumbs: true
   ShowCodeCopyButtons: true # 开启代码复制（实用优化）
   ShowWordCount: true

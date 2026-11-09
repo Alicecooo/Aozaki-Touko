@@ -70,24 +70,6 @@
 :root[data-stargazing="true"] .kb-idle-ui { opacity: 0 !important; pointer-events: none !important; transition: opacity 1.7s ease; }
 :root[data-stargazing="true"] .kb-starfield { background: radial-gradient(ellipse at 75% 25%,#536eb91d,transparent 65%),radial-gradient(ellipse at 15% 80%,#725b9514,transparent 60%); }
 
-/* Each article owns its background preference. */
-.kb-reading-tools { position: relative; margin-top: 14px; }
-#kb-background-toggle { display: inline-flex; align-items: center; gap: 6px; color: var(--secondary); font-size: 12px; padding: 4px 0; }
-#kb-background-menu { position: absolute; top: 34px; left: 0; width: 260px; padding: 14px; }
-.kb-background-options { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-.kb-background-options button { font-size: 11px; color: var(--secondary); padding: 4px; border-radius: 5px; }
-.kb-background-options button[aria-pressed="true"] { box-shadow: 0 0 0 1px var(--secondary); color: var(--primary); }
-.kb-swatch { display: block; height: 28px; margin-bottom: 6px; border-radius: 3px; border: 1px solid var(--border); }
-.kb-swatch-plain { background: var(--theme); }
-.kb-swatch-grid { background-color: var(--theme); background-image: linear-gradient(var(--tertiary) 1px, transparent 1px), linear-gradient(90deg, var(--tertiary) 1px, transparent 1px); background-size: 8px 8px; }
-.kb-swatch-dusk { background: linear-gradient(130deg, #6a647c, #35374c); }
-.kb-swatch-paper { background: #ede5d5; }
-.kb-background-reset { display: block; margin: 12px auto 0; font-size: 10px; color: var(--secondary); }
-html[data-article-background="grid"] body { background-image: linear-gradient(color-mix(in srgb, var(--secondary) 7%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--secondary) 7%, transparent) 1px, transparent 1px); background-size: 28px 28px; }
-html[data-article-background="dusk"] body { background-image: radial-gradient(ellipse at 0% 12%, #8e79b51c, transparent 48%), radial-gradient(ellipse at 100% 65%, #a66b7b18, transparent 50%); background-attachment: fixed; }
-:root[data-article-background="paper"] { --theme: #f4eee2; --entry: #faf6ee; --primary: #39352e; --secondary: #7d7467; --content: #3b352d; --border: #ddd4c3; --code-bg: #ede6d9; --tertiary: #d6ccbb; color-scheme: light; }
-html[data-article-background="paper"] body { background-image: repeating-linear-gradient(0deg, #a88a5a05 0, #a88a5a05 1px, transparent 1px, transparent 4px); }
-html[data-article-background]:not([data-article-background="plain"]) .post-single { padding: 26px 30px; background: color-mix(in srgb, var(--theme) 94%, transparent); border: 1px solid var(--border); border-radius: 10px; }
 @media (max-width: 620px) {
   .kb-home .home-info-avatar-container { width: 100px; height: 100px; }
   .kb-home .first-entry { margin: 16px 0 24px; min-height: 100px; }
@@ -98,7 +80,6 @@ html[data-article-background]:not([data-article-background="plain"]) .post-singl
   .kb-music-dock { right: 14px; bottom: max(14px,env(safe-area-inset-bottom)); width: 232px; }
   .kb-home-post .entry-footer { font-size: 10px; }
   .kb-header #menu { gap: 20px; flex: 1; }
-  html[data-article-background]:not([data-article-background="plain"]) .post-single { padding: 20px 18px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .kb-idle-ui, :root[data-stargazing="true"] .kb-idle-ui { transition: none; }

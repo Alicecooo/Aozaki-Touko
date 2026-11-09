@@ -53,7 +53,6 @@ params:
     favicon: favicon.svg
   homeEffects: true
   homeIdleSeconds: 30
-  articleBackground: plain
   music:
     enabled: true
     autoplay: true
@@ -67,7 +66,6 @@ params:
   ShowCodeCopyButtons: true # 开启代码复制（实用优化）
   ShowWordCount: true
   ShowRssButtonInSectionTermList: false
-  UseHugoToc: false
 
   # 首页信息
   homeInfoParams:
@@ -83,7 +81,6 @@ params:
     hiddenInSingle: true
 
   showtoc: true # 显示目录
-  tocopen: true # 自动展开目录
 
 home:
   sortBy: "date"

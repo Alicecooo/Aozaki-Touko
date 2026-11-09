@@ -27,20 +27,17 @@
       {{- partial "post_canonical.html" . -}}
     </div>
     {{- end }}
-    {{ partial "knowledge/article-meta.html" . }}
-    {{ partial "knowledge/reading-tools.html" . }}
   </header>
   {{- $isHidden := (.Param "cover.hiddenInSingle") | default (.Param "cover.hidden") | default false }}
   {{- partial "cover.html" (dict "cxt" . "IsSingle" true "isHidden" $isHidden) }}
-  {{- if (.Param "ShowToc") }}
-  {{- partial "toc.html" . }}
-  {{- end }}
-
   {{- if .Content }}
+  <div class="kb-reading-layout">
   <div class="post-content">
     {{- if not (.Param "disableAnchoredHeadings") }}
     {{- partial "anchored_headings.html" .Content -}}
     {{- else }}{{ .Content }}{{ end }}
+  </div>
+  {{- if (.Param "ShowToc") }}{{ partial "toc.html" . }}{{ end }}
   </div>
   {{- end }}
 

@@ -1,5 +1,4 @@
 ---
-article_background: dusk
 topics: [reflections]
 date: '2026-07-28T00:47:40+08:00'
 draft: false

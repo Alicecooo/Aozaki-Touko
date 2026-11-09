@@ -1,8 +1,9 @@
 {{- if .Fragments.Headings -}}
-<div class="toc">
-  <details {{ if .Param "tocopen" }}open{{ end }}>
-    <summary><span class="details">文章目录</span></summary>
-    <div class="inner">{{ .TableOfContents }}</div>
-  </details>
-</div>
+<aside class="kb-toc-sidebar" aria-label="文章目录">
+  <div class="toc"><h2>目录</h2><div class="inner">{{ replace .TableOfContents `id="TableOfContents"` `id="kb-side-contents"` | safeHTML }}</div></div>
+</aside>
+<details class="kb-toc-drawer">
+  <summary aria-label="展开文章目录">目录</summary>
+  <div class="kb-toc-drawer-panel" aria-label="文章目录">{{ replace .TableOfContents `id="TableOfContents"` `id="kb-drawer-contents"` | safeHTML }}</div>
+</details>
 {{- end -}}

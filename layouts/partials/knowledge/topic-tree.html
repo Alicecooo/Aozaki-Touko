@@ -4,6 +4,20 @@
 <details class="kb-tree-root" open>
   <summary><span>{{ .Title }}</span><span class="kb-tree-count">{{ len $pages }}</span></summary>
   <div class="kb-tree-children">
+    {{ $grouped := slice }}
+    {{ range site.Taxonomies.series.Alphabetical }}
+      {{ $series := .Page }}
+      {{ $seriesPages := intersect $series.RegularPages $pages }}
+      {{ if $seriesPages }}
+      {{ $grouped = $grouped | collections.Union $seriesPages }}
+      <details class="kb-tree-branch">
+        <summary><span>{{ $series.Title }}</span><span class="kb-tree-count">{{ len $seriesPages }}</span></summary>
+        <ul class="kb-tree-leaves">{{ range first 8 $seriesPages.ByLastmod.Reverse }}<li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>{{ end }}
+        {{ if gt (len $seriesPages) 8 }}<li><a class="kb-tree-more" href="{{ $series.RelPermalink }}">更多 →</a></li>{{ end }}</ul>
+      </details>
+      {{ end }}
+    {{ end }}
+    {{ $pages = $pages | complement $grouped }}
     {{ $tagged := slice }}
     {{ range site.Taxonomies.tags.Alphabetical }}
       {{ $tag := .Page }}

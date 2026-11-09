@@ -1,8 +1,7 @@
 {{/* No secondary footer navigation. */}}
 {{ if and .IsHome site.Params.homeEffects }}{{ partial "knowledge/home-sky.html" . }}{{ end }}
 {{ partial "knowledge/music.html" . }}
-{{ $personal := resources.Get "js/site-personal.js" | resources.Minify | fingerprint }}
-<script defer src="{{ $personal.RelPermalink }}" integrity="{{ $personal.Data.Integrity }}"></script>
+{{ if and .IsPage (.Param "ShowToc") }}{{ $toc := resources.Get "js/toc.js" | resources.Minify | fingerprint }}<script defer src="{{ $toc.RelPermalink }}" integrity="{{ $toc.Data.Integrity }}"></script>{{ end }}
 {{ if site.Params.music.enabled }}{{ $music := resources.Get "js/music-player.js" | resources.Minify | fingerprint }}<script defer src="{{ $music.RelPermalink }}" integrity="{{ $music.Data.Integrity }}"></script>{{ end }}
 {{ if and .IsHome site.Params.homeEffects }}{{ $sky := resources.Get "js/constellation.js" | resources.Minify | fingerprint }}<script defer src="{{ $sky.RelPermalink }}" integrity="{{ $sky.Data.Integrity }}"></script>{{ end }}
 {{ if and .IsHome site.Params.homeEffects }}{{ $idle := resources.Get "js/stargazing.js" | resources.Minify | fingerprint }}<script defer src="{{ $idle.RelPermalink }}" integrity="{{ $idle.Data.Integrity }}"></script>{{ end }}

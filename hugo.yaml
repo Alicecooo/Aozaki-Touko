@@ -54,7 +54,7 @@ params:
   homeIdleSeconds: 30
   music:
     enabled: true
-    autoplay: true
+    autoplay: false
     volume: 0.25
 
   # 界面展示

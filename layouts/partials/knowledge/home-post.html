@@ -1,5 +1,6 @@
-<article class="post-entry kb-home-post kb-row">
-  <header class="entry-header"><h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3></header>
+<article class="post-entry kb-home-post">
+  <header class="entry-header"><h3>{{ .Title }}</h3></header>
   {{ with (.Description | default (.Params.summary | plainify)) }}<div class="entry-content"><p>{{ . | truncate 130 }}</p></div>{{ end }}
   <footer class="entry-footer"><time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod.Format "2006-01-02" }}</time></footer>
+  <a class="entry-link" href="{{ .RelPermalink }}" aria-label="{{ .Title }}"></a>
 </article>

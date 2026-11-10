@@ -24,30 +24,21 @@
                     <div class="archive-month-label">
                         <span class="archive-month-name">{{ .Key }}月</span>
                     </div>
-
-                    <ol class="archive-posts">
-                        {{- range .Pages }}
-                        <li class="archive-post">
-                            <a class="archive-post-link" href="{{ .RelPermalink }}">
-                                <time class="archive-post-date" datetime="{{ .Date.Format "2006-01-02" }}">
-                                    {{ .Date.Format "01-02" }}
-                                </time>
-
-                                <span class="archive-post-body">
-                                    <span class="archive-post-title">
-                                        {{ .Title }}
-                                    </span>
-
-                                    {{- with .Description }}
-                                    <span class="archive-post-description">
-                                        {{ . }}
-                                    </span>
-                                    {{- end }}
-                                </span>
-                            </a>
-                        </li>
+                    <div class="archive-days">
+                        {{- range .Pages.GroupByDate "2006-01-02" }}
+                        <details class="archive-day">
+                            <summary class="archive-day-summary">
+                                <time datetime="{{ .Key }}">{{ (index .Pages 0).Date.Format "02" }}日</time>
+                                <span class="archive-day-count">{{ len .Pages }} 篇</span>
+                            </summary>
+                            <ol class="archive-posts">
+                                {{- range .Pages }}
+                                <li class="archive-post"><a class="archive-post-link" href="{{ .RelPermalink }}"><span class="archive-post-title">{{ .Title }}</span></a></li>
+                                {{- end }}
+                            </ol>
+                        </details>
                         {{- end }}
-                    </ol>
+                    </div>
                 </section>
                 {{- end }}
             </div>

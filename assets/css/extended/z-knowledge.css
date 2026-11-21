@@ -64,7 +64,19 @@
 
 /* Local reading adjustments: smaller headings and a readable side TOC. */
 .post-single .post-title { font-size: var(--kb-title-size); line-height: 1.4; }
+/* Use Song-style serif fonts for long-form reading, with platform fallbacks. */
+.kb-reading {
+  --kb-reading-font: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "Noto Serif CJK SC", SimSun, "Noto Serif", Georgia, serif;
+}
+
+.kb-reading .post-title,
+.kb-reading .post-description,
+.kb-reading .post-content {
+  font-family: var(--kb-reading-font);
+}
+
 .post-single .post-content { font-size: 18px; line-height: 1.8; }
+.kb-reading .kb-reading-layout > .post-content { line-height: 1.9; }
 .post-single .post-content h1 { margin: 32px 0 16px; font-size: 28px; }
 .post-single .post-content h2 { margin: 28px 0 14px; font-size: 24px; }
 .post-single .post-content h3 { font-size: 21px; }

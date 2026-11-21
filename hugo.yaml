@@ -27,6 +27,8 @@ buildFuture: false
 buildExpired: false
 
 caches:
+  assets:
+    dir: ":cacheDir/:project"
   images:
     dir: ":cacheDir/:project"
 
@@ -108,6 +110,10 @@ menu:
       name: Archive
       url: /archives/
       weight: 50
+    - identifier: about
+      name: About
+      url: /about/
+      weight: 60
 
 # 代码高亮（保留核心）
 pygmentsUseClasses: true

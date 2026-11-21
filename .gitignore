@@ -3,7 +3,7 @@
 /public/
 
 # Hugo 资源缓存与构建锁（本地生成，随构建变化）
-/resources/_gen/
+/resources/
 /.hugo_build.lock
 
 # ---------- 系统 / 编辑器 ----------

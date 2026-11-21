@@ -2,7 +2,13 @@
 
 /* Let navigation and the introduction wrap when their content needs room. */
 .nav .logo, .nav #menu { min-width: 0; }
-.nav #menu { max-width: calc(100% - var(--gap) * 2); }
+.nav #menu {
+  max-width: calc(100% - var(--gap) * 2);
+  flex-wrap: wrap;
+  column-gap: var(--gap);
+  overflow: visible;
+}
+.nav #menu > li + li { margin-inline-start: 0; }
 .kb-home .home-info { min-height: 0; padding-block: clamp(1.5rem,4vw,3rem); }
 .home-info-content-wrapper { display: flex; flex-wrap: wrap; align-items: center; gap: clamp(1.25rem,3vw,2rem); }
 .home-info-avatar-container { flex: 0 0 clamp(6.25rem,12vw,7.75rem); aspect-ratio: 1; }
@@ -87,6 +93,8 @@
 .post-single .post-content code { font-size: .9em; }
 .post-single .post-content pre code { font-size: 16px; line-height: 1.65; }
 @media (max-width: 48rem) {
+  .nav #menu { column-gap: .5rem; }
+  .nav #menu a { line-height: 1.25; padding-block: .625rem; }
   .kb-home .kb-home-post { padding: var(--gap); }
   .kb-tree-children, .kb-tree-leaves { padding-inline-start: 1rem; }
   .kb-row { gap: .5rem; }

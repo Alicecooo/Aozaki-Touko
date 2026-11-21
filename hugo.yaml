@@ -25,6 +25,10 @@ buildDrafts: false
 buildFuture: false
 buildExpired: false
 
+caches:
+  images:
+    dir: ":cacheDir/:project"
+
 # 输出压缩（提升性能）
 minify:
   disableXML: true

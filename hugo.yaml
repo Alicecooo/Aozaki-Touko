@@ -1,6 +1,7 @@
 baseURL: https://alicecooo.github.io/Aozaki-Touko/
 languageCode: zh-cn
 defaultContentLanguage: zh
+hasCJKLanguage: true
 title: Aozaki Touko
 theme: ["PaperMod"]
 pagination:

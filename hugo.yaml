@@ -76,8 +76,9 @@ params:
   # 首页信息
   homeInfoParams:
     Title: "欢迎回来"
-    Content: 早安、晚安、谢谢、再见！
+    Content: 写点做项目时琢磨明白的事，也给随笔和故事留个地方。
     ImageUrl: /images/Ava.png
+    GitHub: https://github.com/Alicecooo
     enableList: true
 
   # 封面控制
@@ -110,10 +111,6 @@ menu:
       name: Archive
       url: /archives/
       weight: 50
-    - identifier: about
-      name: About
-      url: /about/
-      weight: 60
 
 # 代码高亮（保留核心）
 pygmentsUseClasses: true

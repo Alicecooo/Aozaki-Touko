@@ -102,7 +102,7 @@ menu:
       url: /topics/
       weight: 20
     - identifier: notes
-      name: 随记
+      name: Note
       url: /notes/
       weight: 40
     - identifier: archives

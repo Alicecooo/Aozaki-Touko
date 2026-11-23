@@ -13,7 +13,6 @@ permalinks:
     posts: /posts/:slugorcontentbasename/
 
 taxonomies:
-  category: categories
   tag: tags
   topic: topics
 
@@ -103,7 +102,7 @@ menu:
       url: /topics/
       weight: 20
     - identifier: notes
-      name: Notes
+      name: 随记
       url: /notes/
       weight: 40
     - identifier: archives

@@ -1,9 +1,11 @@
-{{- $names := dict "topics" "Topics" "notes" "Notes" "archives" "Archive" "search" "Search" "posts" "Posts" "about" "About" "tags" "Tags" "categories" "Categories" "series" "Series" -}}
+{{- $names := dict "topics" "Topics" "archives" "Archive" "search" "Search" "posts" "Posts" "tags" "Tags" "series" "Series" -}}
 {{- $title := .Title -}}
 {{- if .IsHome -}}
   {{- $title = "Home" -}}
 {{- else if .Params.tab_title -}}
   {{- $title = .Params.tab_title -}}
+{{- else if and (eq .Section "notes") (or .IsSection (findRE `\p{Han}` $title)) -}}
+  {{- $title = .CurrentSection.Title -}}
 {{- else if or .IsSection (eq .Kind "taxonomy") -}}
   {{- $title = index $names .Section | default "Archive" -}}
 {{- else if and (eq .Kind "term") (eq .Section "topics") -}}
